@@ -2,7 +2,7 @@
 from faker import Faker
 
 from app import app
-from models import db, Production, CastMember, User
+from models import db
 
 
 fake = Faker()

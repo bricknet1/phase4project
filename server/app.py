@@ -7,11 +7,12 @@ from flask_restful import Api, Resource
 from werkzeug.exceptions import NotFound, Unauthorized
 
 from flask_cors import CORS
-
-from models import db, Production, CastMember, User
+from flask_bcrypt import Bcrypt
+from models import db
 
 app = Flask(__name__)
 CORS(app)
+bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
