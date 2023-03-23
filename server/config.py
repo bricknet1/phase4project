@@ -22,21 +22,3 @@ migrate = Migrate(app, db)
 db.init_app(app)
 
 api = Api(app)
-
-# from config import app, db, api
-
-class Signup(Resource):
-    def post(self):
-        data = request.get_json()
-        user = User(email=data['email'])
-        user.password_hash = data['password']
-        db.session.add(user)
-        db.session.commit()
-        return make_response(data.to_dict(), 201)
-api.add_resource(Signup, '/signup')
-
-
-
-
-if __name__ == '__main__':
-    app.run(port=5555, debug=True)
