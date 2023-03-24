@@ -34,6 +34,7 @@ class User(db.Model, SerializerMixin):
 # class Friendship(db.Model, SerializerMixin):
 
 # class Crime(db.Model, SerializerMixin):
+    
 
 # class UserCrime(db.Model, SerializerMixin):
 
