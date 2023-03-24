@@ -2,11 +2,12 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import validates
 from sqlalchemy.ext.hybrid import hybrid_property
 from config import db, bcrypt
+from sqlalchemy.ext.associationproxy import association_proxy
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash',)
+    serialize_rules = ('-_password_hash', '-user_crimes')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -16,6 +17,10 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String)
 
     _password_hash = db.Column(db.String)
+
+    user_crimes = db.relationship('UserCrime', backref='users')
+
+    crimes = association_proxy('user_crimes', 'crimes')
 
     @hybrid_property
     def password_hash(self):
@@ -33,9 +38,30 @@ class User(db.Model, SerializerMixin):
 
 # class Friendship(db.Model, SerializerMixin):
 
-# class Crime(db.Model, SerializerMixin):
-    
+class Crime(db.Model, SerializerMixin):
+    __tablename__ = 'crimes'
 
-# class UserCrime(db.Model, SerializerMixin):
+    serialize_rules = ('-user_crimes',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    description = db.Column(db.String)
+    lethal = db.Column(db.Boolean)
+    misdemeanor = db.Column(db.Boolean)
+    felony = db.Column(db.Boolean)
+
+    user_crimes = db.relationship('UserCrime', backref='crimes')
+
+    users = association_proxy('user_crimes', 'users')
+
+class UserCrime(db.Model, SerializerMixin):
+    __tablename__ = 'user_crimes'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    crime_id = db.Column(db.Integer, db.ForeignKey('crimes.id'))
+    date = db.Column(db.String)
+    caught = db.Column(db.Boolean)
+    convicted = db.Column(db.Boolean)
 
 # class Messages(db.Model, SerializerMixin):
