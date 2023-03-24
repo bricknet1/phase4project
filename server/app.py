@@ -17,8 +17,5 @@ class Signup(Resource):
         return make_response(user.to_dict(rules=('-_password_hash',)), 201)
 api.add_resource(Signup, '/signup')
 
-
-
-
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
