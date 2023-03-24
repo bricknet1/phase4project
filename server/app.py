@@ -22,8 +22,13 @@ class Login(Resource):
         data = request.get_json()
         user = User.query.filter_by(email=data['email']).first()
         if user.authenticate(data['password']):
+            print('all good boss')
             session['user_id'] = user.id
             return make_response(user.to_dict(), 200)
+        else:
+            abort(404, 'Login incorrect.')
+
+
 api.add_resource(Login, '/login')
 
 class AuthorizedSession(Resource):

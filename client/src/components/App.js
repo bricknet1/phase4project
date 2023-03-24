@@ -8,11 +8,13 @@ import Profile from './Profile.js';
 
 
 function App() {
+    const [user, setUser] = useState(null);
+
     return (
         <>
             <Switch>
                 <Route path="/login">
-                    <Login />
+                    <Login setUser={setUser}/>
                 </Route>
                 <Route path="/home">
                     <Home />
