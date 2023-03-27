@@ -7,7 +7,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash', '-user_crimes', 'crimes', '-posts')
+    serialize_rules = ('-_password_hash', '-user_crimes', 'crime_list', '-posts',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -18,8 +18,29 @@ class User(db.Model, SerializerMixin):
 
     _password_hash = db.Column(db.String)
 
-    user_crimes = db.relationship('UserCrime', backref='users')
-    crimes = association_proxy('user_crimes', 'crimes')
+    user_crimes = db.relationship('UserCrime', backref='user')
+    crimes = association_proxy('user_crimes', 'crime')
+
+    @property
+    def crime_list(self):
+        returnlist = []
+        for crime in set(self.crimes):
+            for each in crime.user_crimes:
+                if each.user_id == self.id:
+                    crimedict = {
+                        "name":crime.name,
+                        "description":crime.description,
+                        "lethal":crime.lethal,
+                        "misdemeanor":crime.misdemeanor,
+                        "felony":crime.felony,
+                        "date":each.date,
+                        "caught":each.caught,
+                        "convicted":each.convicted
+                    }
+                    returnlist.append(crimedict)
+        return returnlist
+
+
 
     posts = db.relationship('Post', backref='user')
 
@@ -52,7 +73,7 @@ class Post(db.Model, SerializerMixin):
 class Crime(db.Model, SerializerMixin):
     __tablename__ = 'crimes'
 
-    serialize_rules = ('-user_crimes',)
+    # serialize_rules = ()
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -61,14 +82,15 @@ class Crime(db.Model, SerializerMixin):
     misdemeanor = db.Column(db.Boolean)
     felony = db.Column(db.Boolean)
 
-    user_crimes = db.relationship('UserCrime', backref='crimes')
+    user_crimes = db.relationship('UserCrime', backref='crime')
 
-    users = association_proxy('user_crimes', 'users')
+    users = association_proxy('user_crimes', 'user')
+    # date = association_proxy('user_crimes', 'date')
 
 class UserCrime(db.Model, SerializerMixin):
     __tablename__ = 'user_crimes'
 
-    serialize_rules = ()
+    serialize_rules = ('-user', '-crime')
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
