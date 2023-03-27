@@ -163,7 +163,7 @@ with app.app_context():
 
     # Create some posts
     posts = []
-    for i in range(20):
+    for i in range(24):
         post = Post(
             user_id=random.randint(1, 11),
             content=fake.paragraph(nb_sentences=3),
