@@ -38,7 +38,7 @@ class User(db.Model, SerializerMixin):
 class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
 
-    serialize_rules = ()
+    serialize_rules = ('-user',)
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String)
@@ -65,6 +65,8 @@ class Crime(db.Model, SerializerMixin):
 
 class UserCrime(db.Model, SerializerMixin):
     __tablename__ = 'user_crimes'
+
+    serialize_rules = ()
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
