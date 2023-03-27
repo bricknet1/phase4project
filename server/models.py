@@ -40,8 +40,6 @@ class User(db.Model, SerializerMixin):
                     returnlist.append(crimedict)
         return returnlist
 
-
-
     posts = db.relationship('Post', backref='user')
 
     @hybrid_property
@@ -59,7 +57,7 @@ class User(db.Model, SerializerMixin):
 class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
 
-    serialize_rules = ()
+    serialize_rules = ('-user.bio', '-user.crime_list', '-user.email', '-user.id', '-user.is_admin')
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String)
