@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from faker import Faker
+import random
 
 from app import app
 from models import db, Crime, User, UserCrime
@@ -146,24 +147,18 @@ with app.app_context():
         user.password_hash = 'password'
         users.append(user)
 
-    # user1 = User(
-    #     name="Boat",
-    #     email="boat@show.com"
-    # )
-    # user1.password_hash = "password"
-
-    # users = [user1]
-
     # Create some user crimes
-    usercrime1 = UserCrime(
-        user_id=1,
-        crime_id=1,
-        date="12/2/85",
-        caught=False,
-        convicted=False
-    )
-
-    usercrimes = [usercrime1]
+    usercrimes = []
+    for i in range(20):
+        caught = random.choice([True, False])
+        usercrime = UserCrime(
+            user_id=random.randint(1, 11),
+            crime_id=random.randint(1, 7),
+            date=fake.date(),
+            caught=caught,
+            convicted=(False if caught == False else random.choice([True, False]))
+        )
+        usercrimes.append(usercrime)
 
     db.session.add_all(crimes)
     db.session.add_all(users)
