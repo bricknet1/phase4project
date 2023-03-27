@@ -49,5 +49,14 @@ class Logout(Resource):
         return make_response('', 204)
 api.add_resource(Logout, '/logout')
 
+class GetUserByID(Resource):
+    def get(self, id):
+        try:
+            user = User.query.filter_by(id=id).first()
+            return make_response(user.to_dict(), 200)
+        except:
+            abort(404, "User not found")
+api.add_resource(GetUserByID, '/users/<int:id>')
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
