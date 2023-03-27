@@ -4,8 +4,20 @@ from faker import Faker
 from app import app
 from models import db, Crime, User, UserCrime
 
-
 fake = Faker()
+
+profile_photos = [
+    'https://www.gannett-cdn.com/media/2017/10/08/Brevard/Brevard/636430553022690213-2017-00015068.jpg?width=390&format=pjpg&auto=webp&quality=70',
+    'https://www.tampabay.com/resizer//J9N3spmfSgo7WVX6Oqy3FL584lY=/fit-in/900x506/smart/filters:fill(333)/arc-anglerfish-arc2-prod-tbt.s3.amazonaws.com/public/X6UVAXGJEEI6TAOPPAY4DVT77I.jpg',
+    'https://weartv.com/resources/media/b2795e90-f748-4391-bbb3-da954a2ac2e0-medium16x9_mcdowell2.PNG?1669659246097',
+    'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/MSNBC/Components/Slideshows/_production/_archive/Entertainment/_Celebrity-Evergreen/ss_070724_celebmugs/today-justin-bieber-mugshot-140123.jpg',
+    'https://dss.fosterwebmarketing.com/upload/1055/th-mugshot.jpg',
+    'https://daveandchuckthefreak.com/wp-content/uploads/sites/8/2022/10/mugshotcrazyeyes1017.jpg',
+    'https://www.denverpost.com/wp-content/uploads/2016/05/20100407__winesberry1p1.jpg?w=480',
+    'https://crawfordcountynow.sagacom.com/files/2022/01/IMG_9704-586x480.jpeg',
+    'https://s4.reutersmedia.net/resources/r/?m=02&d=20190312&t=2&i=1365547925&w=&fh=545&fw=810&ll=&pl=&sq=&r=2019-03-12T174119Z_32695_MRPRC14438F2680_RTRMADP_0_PEOPLE-MCGREGOR',
+    'https://crawfordcountynow.sagacom.com/files/2022/02/IMG_0157-640x480.jpg'
+]
 
 with app.app_context():
 
@@ -13,6 +25,7 @@ with app.app_context():
     User.query.delete()
     UserCrime.query.delete()
 
+    # Create some crimes
     crime1 = Crime(
         name="Triple Bingo",
         description="Hosting more than 2 games of bingo for seniors per week in the state of Minnesota",
@@ -111,14 +124,37 @@ with app.app_context():
 
     crimes = [crime1, crime2, crime3, crime4, crime5, crime6, crime7]
 
-    user1 = User(
+    # Create some users
+    users = []
+
+    our_user = User(
         name="Boat",
-        email="boat@show.com"
+        bio="I'm a boat",
+        photo="https://www.galatiyachts.com/wp-content/uploads/163925496_10159410582658573_2772931438975323239_n.jpg",
+        email="boat@boat.com"
     )
-    user1.password_hash = "password"
+    our_user.password_hash = "boat"
+    users.append(our_user)
 
-    users = [user1]
+    for i in range(10):
+        user = User(
+            name=fake.name(),
+            bio=fake.paragraph(nb_sentences=3),
+            photo=profile_photos[i],
+            email=fake.email()
+        )
+        user.password_hash = 'password'
+        users.append(user)
 
+    # user1 = User(
+    #     name="Boat",
+    #     email="boat@show.com"
+    # )
+    # user1.password_hash = "password"
+
+    # users = [user1]
+
+    # Create some user crimes
     usercrime1 = UserCrime(
         user_id=1,
         crime_id=1,
