@@ -23,9 +23,7 @@ class Login(Resource):
         user = User.query.filter_by(email=data['email']).first()
         if user:
             if user.authenticate(data['password']):
-                # print('all good boss')
                 session['user_id'] = user.id
-                # print(session['user_id'])
                 return make_response(user.to_dict(), 200)
             else:
                 abort(404, 'Login incorrect.')
@@ -45,15 +43,15 @@ api.add_resource(AuthorizedSession, '/authorized')
 class Logout(Resource):
     def delete(self):
         session['user_id'] = None
-        # print(session['user_id'])
         return make_response('', 204)
 api.add_resource(Logout, '/logout')
 
 class GetUserByID(Resource):
     def get(self, id):
         try:
+            id = str(id)
             user = User.query.filter_by(id=id).first()
-            return make_response(user.to_dict(), 200)
+            return make_response(user.to_dict(rules=('posts',)), 200)
         except:
             abort(404, "User not found")
 api.add_resource(GetUserByID, '/users/<int:id>')
