@@ -7,7 +7,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash', '-user_crimes')
+    serialize_rules = ('-_password_hash', '-user_crimes', 'crimes')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
