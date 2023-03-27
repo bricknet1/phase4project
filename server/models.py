@@ -7,7 +7,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash', '-user_crimes', 'crimes', '-posts',)
+    serialize_rules = ('-_password_hash', '-user_crimes', 'crimes', '-posts')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -44,6 +44,8 @@ class Post(db.Model, SerializerMixin):
     content = db.Column(db.String)
     likes = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    name = association_proxy('users', 'name')
 
 # class Friendship(db.Model, SerializerMixin):
 
