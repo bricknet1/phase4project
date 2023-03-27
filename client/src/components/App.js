@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react'
 import Home from './Home.js';
 import Login from './Login.js';
 import Profile from './Profile.js';
+import NavBar from './NavBar.js';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
 
     return (
         <>
+            <NavBar setUser={setUser}></NavBar>
             <Switch>
                 <Route path="/login">
                     <Login setUser={setUser}/>
@@ -19,7 +21,7 @@ function App() {
                 <Route path="/home">
                     <Home />
                 </Route>
-                <Route path="/profile/:id">
+                <Route path="/profile/:id" user={user}>
                     <Profile />
                 </Route>
             </Switch>  

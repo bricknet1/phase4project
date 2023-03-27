@@ -6,7 +6,10 @@ import * as yup from "yup";
 function Login({ setUser }) {
 
     const history = useHistory();
-    const [error, setError] = useState();
+    const [error, setError] = useState('');
+    const [signup, setSignup] = useState(false);
+
+    const handleClick = () => setSignup(!signup)
 
     const formSchema = yup.object().shape({
         email: yup.string().email()
@@ -19,7 +22,7 @@ function Login({ setUser }) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch('/login', {
+            fetch(signup?'/signup':'/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -31,7 +34,8 @@ function Login({ setUser }) {
                     res.json().then(user => {
                         console.log(user)
                         setUser(user)
-                        history.push('/home')
+                        if (signup){history.push('/profile/'+user.id)}
+                        else {history.push('/home')}
                     })
                 } else {
                     console.log('nope')
@@ -43,17 +47,18 @@ function Login({ setUser }) {
 
     return (
         <>
-            <h1>Login</h1>
+            <h1>{signup?'Create An Account':'Login'}</h1>
             <h2 style={{color:'red'}}> {formik.errors.email}</h2>
             {error&& <h2 style={{color:'red'}}> {error}</h2>}
-            
+            <button onClick={handleClick}>{signup?'Already have an account? Log in':'New here? Sign up'}</button>
             <form onSubmit={formik.handleSubmit}>
                 <label >Email</label>
                 <input type="text"  name="email" value={formik.values.email} onChange={formik.handleChange} />
                 <label >Password</label>
                 <input type="text"  name="password" value={formik.values.password} onChange={formik.handleChange} />
-                <input type='submit' value={'Log In!'} />
+                <input type='submit' value={signup?'Create Account!':'Log In!'} />
             </form>
+
         </>
     );
 }
