@@ -3,7 +3,7 @@ from faker import Faker
 import random
 
 from app import app
-from models import db, Crime, User, UserCrime
+from models import db, Crime, User, UserCrime, Post
 
 fake = Faker()
 
@@ -25,6 +25,7 @@ with app.app_context():
     Crime.query.delete()
     User.query.delete()
     UserCrime.query.delete()
+    Post.query.delete()
 
     # Create some crimes
     crime1 = Crime(
@@ -160,7 +161,18 @@ with app.app_context():
         )
         usercrimes.append(usercrime)
 
+    # Create some posts
+    posts = []
+    for i in range(20):
+        post = Post(
+            user_id=random.randint(1, 11),
+            content=fake.paragraph(nb_sentences=3),
+            likes=random.randint(0, 69),
+        )
+        posts.append(post)
+
     db.session.add_all(crimes)
     db.session.add_all(users)
     db.session.add_all(usercrimes)
+    db.session.add_all(posts)
     db.session.commit()
