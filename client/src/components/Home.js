@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function Home() {
 
     const [index, setIndex] = useState(0);
     const [posts, setPosts] = useState([]);
 
+    const history = useHistory();
+
     const numPosts = posts.length;
-    const maxIndex = numPosts - (numPosts % 5)
+    let maxIndex = numPosts - (numPosts % 5)
+    if (numPosts % 5 == 0) maxIndex = maxIndex - 5;
 
     const handleClickForward = () => {
         if (index < maxIndex) {
@@ -20,6 +24,11 @@ function Home() {
         }
     };
 
+    const handleClickPhoto = (e) => {
+        const user_id = e.target.getAttribute('user_id');
+        history.push(`profile/${user_id}`)
+    };
+
     useEffect(() => {
         fetch('/posts')
           .then(res => res.json())
@@ -30,14 +39,20 @@ function Home() {
         return <h1>Loading</h1>
     } else {
         const postList = posts.slice(index, index+5).map((post, index) => {    
-            const { content, likes, user } = post;
+            const { content, likes, user, user_id } = post;
             const { name, photo } = user;
             
             return (
                 <ul key={index}>
                     <div className='div-post'>
                         <div>
-                            <img src={photo} className="img-post" alt={name} />
+                            <img 
+                              user_id={user_id}
+                              src={photo} 
+                              className="img-post" 
+                              alt={name} 
+                              onClick={handleClickPhoto}
+                            />
                             <span>{name}</span>
                         </div>
                         <p>{content}</p>
