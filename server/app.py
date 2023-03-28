@@ -96,6 +96,16 @@ class Crimes(Resource):
             return make_response(crimes, 200)
         except Exception as e:            
             abort(404, [e.__str__()])
+    def post(self):
+        data = request.get_json()
+        crime = Crime(
+            name=data['name'],
+            description=data['description']
+        )
+        db.session.add(crime)
+        db.session.commit()
+        response = make_response(crime.to_dict(), 200)
+        return response
 api.add_resource(Crimes, '/crimes')
 
 class CrimeByID(Resource):

@@ -27,7 +27,7 @@ function Profile({user}) {
     });
     const [editMode, setEditMode] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [error, setError] = useState('');
+    // const [error, setError] = useState('');
     
     function handleClick(){
         setEditMode(current=>!current)

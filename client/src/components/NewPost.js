@@ -1,11 +1,11 @@
 import { useFormik } from "formik";
 import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
+// import { useState } from 'react';
 
 function NewPost() {
 
     const history = useHistory();
-    const [error, setError] = useState('');
+    // const [error, setError] = useState('');
 
     const formik = useFormik({
         enableReinitialize: true,

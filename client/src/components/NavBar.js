@@ -1,6 +1,4 @@
 import {slide as Menu} from 'react-burger-menu'
-import burgericon from '../assets/menuicon.png'
-import {NavLink} from 'react-router-dom';
 import { useHistory } from 'react-router-dom'
 
 function NavBar({ user, setUser }){
