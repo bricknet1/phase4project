@@ -1,5 +1,4 @@
-import { Route, Switch, useHistory } from 'react-router-dom'
-import {createGlobalStyle} from 'styled-components'
+import { Route, Switch } from 'react-router-dom'
 import {useEffect, useState} from 'react'
 
 import Home from './Home.js';
@@ -32,7 +31,7 @@ function App() {
 
     return (
         <>
-            <NavBar setUser={setUser}></NavBar>
+            <NavBar user={user} setUser={setUser}></NavBar>
             <Switch>
                 <Route path="/login">
                     <Login setUser={setUser}/>

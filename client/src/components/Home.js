@@ -8,8 +8,6 @@ function Home() {
     const numPosts = posts.length;
     const maxIndex = numPosts - (numPosts % 5)
 
-    console.log(numPosts, maxIndex)
-
     const handleClickForward = () => {
         if (index < maxIndex) {
             setIndex(index + 5);
@@ -31,20 +29,20 @@ function Home() {
     if (!posts) {
         return <h1>Loading</h1>
     } else {
-        const postList = posts.slice(index, index+5).map((post) => {    
+        const postList = posts.slice(index, index+5).map((post, index) => {    
             const { content, likes, user } = post;
             const { name, photo } = user;
             
             return (
-                <ul>
-                <div className='div-post'>
-                    <div>
-                        <img src={photo} className="img-post" />
-                        <span>{name}</span>
+                <ul key={index}>
+                    <div className='div-post'>
+                        <div>
+                            <img src={photo} className="img-post" alt={name} />
+                            <span>{name}</span>
+                        </div>
+                        <p>{content}</p>
+                        <span>❤ {likes}</span>
                     </div>
-                    <p>{content}</p>
-                    <span>❤ {likes}</span>
-                </div>
                 </ul>
             );
         });
@@ -52,17 +50,17 @@ function Home() {
         return (
             <>
                 <button onClick={handleClickBack}>
-                    {index == 0 ? '---' : '←'}
+                    {index === 0 ? '---' : '←'}
                 </button>
                 <button onClick={handleClickForward}>
-                    {index == maxIndex ? '---' : '→'}
+                    {index === maxIndex ? '---' : '→'}
                 </button>
                 <ul>{postList}</ul>
                 <button onClick={handleClickBack}>
-                    {index == 0 ? '---' : '←'}
+                    {index === 0 ? '---' : '←'}
                 </button>
                 <button onClick={handleClickForward}>
-                    {index == maxIndex ? '---' : '→'}
+                    {index === maxIndex ? '---' : '→'}
                 </button>
             </>
         );
