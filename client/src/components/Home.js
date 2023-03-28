@@ -25,7 +25,7 @@ function Home() {
     useEffect(() => {
         fetch('/posts')
           .then(res => res.json())
-          .then((data) => setPosts(data));
+          .then((data) => setPosts(data.reverse()));
     }, []);
 
     if (!posts) {

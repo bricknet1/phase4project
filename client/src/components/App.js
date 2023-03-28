@@ -6,6 +6,7 @@ import Home from './Home.js';
 import Login from './Login.js';
 import Profile from './Profile.js';
 import NavBar from './NavBar.js';
+import NewPost from './NewPost.js';
 
 
 function App() {
@@ -41,6 +42,9 @@ function App() {
                 </Route>
                 <Route path="/profile/:id" >
                     <Profile user={user}/>
+                </Route>
+                <Route path="/newpost" >
+                    <NewPost user={user}/>
                 </Route>
             </Switch>  
         </>
