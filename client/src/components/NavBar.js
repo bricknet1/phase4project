@@ -1,4 +1,4 @@
-import {fallDown as Menu} from 'react-burger-menu'
+import {slide as Menu} from 'react-burger-menu'
 import burgericon from '../assets/menuicon.png'
 import {NavLink} from 'react-router-dom';
 import { useHistory } from 'react-router-dom'
@@ -17,24 +17,45 @@ function NavBar({ user, setUser }){
                 history.push('/home')
             }
         })
-    }
+    };
+
+    const handleClickProfile = () => {
+        history.push(`/profile/${user.id}`)
+    };
 
     return(
-        <>
+        <div className='navbar-container'>
             <h1>Temporary placeholder name of app</h1>
-            <Menu>
+            {user ? 
+                <img 
+                    src={user.photo}      
+                    alt={user.name} 
+                    className="profile-photo-nav"
+                    onClick={handleClickProfile}
+                /> 
+            : null}
+            <Menu right width={'15%'}>
                 <a id="home" className="menu-item" href="/home">Home</a>
                 {user ? 
-                    <a id="logout" className="menu-item" href="/logout" onClick={handleLogout}>Logout</a>
-                    :
-                    <a id="login" className="menu-item" href="/login">Login</a>
+                    <>
+                        <a id="logout" className="bm-item" href="/logout" onClick={handleLogout}>Logout</a>
+                        <br />
+                        <a id="my-profile" className="bm-item" href={`profile/${user.id}`}>My Profile</a>
+                        <br />
+                        <a id="make-post" className="bm-item" href="/newpost">Make a Post</a>
+                        {user.is_admin ? 
+                            <>
+                                <br />
+                                <a id="edit-crimes" className="bm-item" href="/crimes" >Edit Crimes</a> 
+                            </>
+                        : null}
+                    </>
+                    : <a id="login" className="bm-item" href="/login">Login</a>
+                    
                 }
-                {/* <a id="logout" className="menu-item" href="/logout" onClick={handleLogout}>Logout</a>
-                <a id="login" className="menu-item" href="/login">Login</a> */}
-                <a id="make-post" className="menu-item" href="/newpost">Make a Post</a>
-                <a id="edit-crimes" className="menu-item" href="/crimes" >Edit Crimes</a>
+                
             </Menu>
-        </>
+        </div>
     );
 }
 

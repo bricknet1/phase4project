@@ -1,3 +1,12 @@
+.navbar-container {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-container h1 {
+  margin-right: 1rem;
+}
+
 .img-post {
     height: 10vh; 
     width: 10vh;
@@ -7,6 +16,15 @@
 
 .div-post {
     height: 25vh;
+}
+
+.profile-photo-nav {
+  height: 10vh; 
+  width: 10vh;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: 17.5vw;
 }
 
 /* BURGER */
@@ -47,8 +65,6 @@
   .bm-menu-wrap {
     position: fixed;
     height: 100%;
-    right: 0 !important;
-    left: initial !important;
   }
   
   /* General sidebar styles */
@@ -56,8 +72,7 @@
     background: #373a47;
     padding: 2.5em 1.5em 0;
     font-size: 1.15em;
-    right: 0 !important;
-    left: initial !important;
+    height: 100vh;
   }
   
   /* Morph shape necessary with bubble or elastic */
@@ -75,7 +90,9 @@
   /* Individual item */
   .bm-item {
     display: inline-block;
+    margin: 10px;
   }
+
   
   /* Styling of overlay */
   .bm-overlay {
