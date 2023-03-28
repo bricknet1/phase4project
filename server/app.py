@@ -54,6 +54,18 @@ class GetUserByID(Resource):
             return make_response(user.to_dict(rules=('posts',)), 200)
         except:
             abort(404, "User not found")
+
+    def patch(self, id):
+        user = User.query.filter_by(id=id).first()
+        data = request.get_json()
+        if not user:
+            raise NotFound
+        for attr in data:
+            setattr(user, attr, data[attr])
+        db.session.add(user)
+        db.session.commit()
+        response = make_response(user.to_dict(), 200)
+        return response
 api.add_resource(GetUserByID, '/users/<int:id>')
 
 class Posts(Resource):
