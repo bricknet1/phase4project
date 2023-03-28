@@ -1,5 +1,4 @@
-import { Route, Switch, useHistory } from 'react-router-dom'
-import {createGlobalStyle} from 'styled-components'
+import { Route, Switch } from 'react-router-dom'
 import {useEffect, useState} from 'react'
 
 import Home from './Home.js';
