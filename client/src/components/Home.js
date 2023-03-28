@@ -6,7 +6,11 @@ function Home() {
     const [posts, setPosts] = useState([]);
 
     const numPosts = posts.length;
-    const maxIndex = numPosts - (numPosts % 5)
+    let maxIndex = numPosts - (numPosts % 5)
+    if (numPosts % 5 == 0) maxIndex = maxIndex - 5;
+
+    console.log(numPosts)
+    console.log(maxIndex)
 
     const handleClickForward = () => {
         if (index < maxIndex) {
