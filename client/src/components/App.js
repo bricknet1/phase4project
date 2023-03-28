@@ -11,6 +11,24 @@ import NavBar from './NavBar.js';
 function App() {
     const [user, setUser] = useState(null);
 
+    useEffect(() => {
+        fetchUser()
+    },[])
+
+    const fetchUser = () => (
+        fetch('/authorized')
+        .then(res => {
+            if(res.ok){
+            res.json()
+            .then(data => {
+                setUser(data)
+            })
+            } else {
+            setUser(null)
+            }
+        })
+    )
+
     return (
         <>
             <NavBar setUser={setUser}></NavBar>
@@ -21,8 +39,8 @@ function App() {
                 <Route path="/home">
                     <Home />
                 </Route>
-                <Route path="/profile/:id" user={user}>
-                    <Profile />
+                <Route path="/profile/:id" >
+                    <Profile user={user}/>
                 </Route>
             </Switch>  
         </>
