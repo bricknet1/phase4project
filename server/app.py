@@ -3,7 +3,7 @@
 from flask import request, make_response, session, jsonify, abort
 from flask_restful import Resource
 from werkzeug.exceptions import NotFound, Unauthorized
-from models import User, Post
+from models import User, Post, Crime
 
 from config import app, db, api
 
@@ -88,6 +88,42 @@ class Posts(Resource):
         response = make_response(post.to_dict(), 200)
         return response
 api.add_resource(Posts, '/posts')
+
+class Crimes(Resource):
+    def get(self):
+        try:
+            crimes = [crime.to_dict(rules=('-user_crimes',)) for crime in Crime.query.all()]
+            return make_response(crimes, 200)
+        except Exception as e:            
+            abort(404, [e.__str__()])
+api.add_resource(Crimes, '/crimes')
+
+class CrimeByID(Resource):
+    def get(self, id):
+        try:
+            crime = Crime.query.filter_by(id=id).first()
+            return make_response(crime.to_dict(rules=('-user_crimes',)), 200)
+        except:
+            abort(404, "Crime not found")
+    def patch(self, id):
+        crime = Crime.query.filter_by(id=id).first()
+        data = request.get_json()
+        if not crime:
+            raise NotFound
+        for attr in data:
+            setattr(crime, attr, data[attr])
+        db.session.add(crime)
+        db.session.commit()
+        response = make_response(crime.to_dict(), 200)
+        return response
+    def delete(self, id):
+        crime = Crime.query.filter_by(id=id).first()
+        if not crime:
+            raise NotFound
+        db.session.delete(crime)
+        db.session.commit()
+        return make_response('', 204)
+api.add_resource(CrimeByID, '/crimes/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

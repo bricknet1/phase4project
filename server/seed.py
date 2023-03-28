@@ -133,7 +133,8 @@ with app.app_context():
         name="Boat",
         bio="I'm a boat",
         photo="https://www.galatiyachts.com/wp-content/uploads/163925496_10159410582658573_2772931438975323239_n.jpg",
-        email="boat@boat.com"
+        email="boat@boat.com",
+        is_admin=True
     )
     our_user.password_hash = "boat"
     users.append(our_user)

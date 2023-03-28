@@ -6,6 +6,7 @@ import Login from './Login.js';
 import Profile from './Profile.js';
 import NavBar from './NavBar.js';
 import NewPost from './NewPost.js';
+import Crimes from './Crimes.js';
 
 
 function App() {
@@ -43,7 +44,10 @@ function App() {
                     <Profile user={user}/>
                 </Route>
                 <Route path="/newpost" >
-                    <NewPost user={user}/>
+                    <NewPost />
+                </Route>
+                <Route path="/crimes" >
+                    <Crimes user={user}/>
                 </Route>
             </Switch>  
         </>

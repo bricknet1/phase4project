@@ -2,9 +2,7 @@ import { useFormik } from "formik";
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 
-function NewPost({user}) {
-
-    console.log(user);
+function NewPost() {
 
     const history = useHistory();
     const [error, setError] = useState('');

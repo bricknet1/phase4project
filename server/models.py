@@ -78,7 +78,7 @@ class Crime(db.Model, SerializerMixin):
     misdemeanor = db.Column(db.Boolean)
     felony = db.Column(db.Boolean)
 
-    user_crimes = db.relationship('UserCrime', backref='crime')
+    user_crimes = db.relationship('UserCrime', backref='crime', cascade='all, delete-orphan')
 
     users = association_proxy('user_crimes', 'user')
     # date = association_proxy('user_crimes', 'date')
