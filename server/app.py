@@ -75,6 +75,18 @@ class Posts(Resource):
             return make_response(posts, 200)
         except Exception as e:            
             abort(404, [e.__str__()])
+
+    def post(self):
+        data = request.get_json()
+        post = Post(
+            user_id=session['user_id'],
+            content=data['content'],
+            likes=data['likes']
+        )
+        db.session.add(post)
+        db.session.commit()
+        response = make_response(post.to_dict(), 200)
+        return response
 api.add_resource(Posts, '/posts')
 
 if __name__ == '__main__':
