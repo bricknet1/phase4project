@@ -1,0 +1,10 @@
+.img-post {
+    height: 10vh; 
+    width: 10vh;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.div-post {
+    height: 25vh;
+}
