@@ -7,17 +7,32 @@ from models import db, Crime, User, UserCrime, Post
 
 fake = Faker()
 
+profile_names = [
+    'Justin Bieber',
+    'Tom Cruise',
+    'Conor McGregor',
+    'David Bowie',
+    'Eminem',
+    'Keanu Reeves',
+    'Robert Downey Jr',
+    'Elvis Presley',
+    'Khloe Kardashian',
+    'Snoop Dogg',
+    'Lindsey Lohan'
+]
+
 profile_photos = [
-    'https://www.gannett-cdn.com/media/2017/10/08/Brevard/Brevard/636430553022690213-2017-00015068.jpg?width=390&format=pjpg&auto=webp&quality=70',
-    'https://www.tampabay.com/resizer//J9N3spmfSgo7WVX6Oqy3FL584lY=/fit-in/900x506/smart/filters:fill(333)/arc-anglerfish-arc2-prod-tbt.s3.amazonaws.com/public/X6UVAXGJEEI6TAOPPAY4DVT77I.jpg',
-    'https://weartv.com/resources/media/b2795e90-f748-4391-bbb3-da954a2ac2e0-medium16x9_mcdowell2.PNG?1669659246097',
     'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/MSNBC/Components/Slideshows/_production/_archive/Entertainment/_Celebrity-Evergreen/ss_070724_celebmugs/today-justin-bieber-mugshot-140123.jpg',
     'https://dss.fosterwebmarketing.com/upload/1055/th-mugshot.jpg',
-    'https://daveandchuckthefreak.com/wp-content/uploads/sites/8/2022/10/mugshotcrazyeyes1017.jpg',
-    'https://www.denverpost.com/wp-content/uploads/2016/05/20100407__winesberry1p1.jpg?w=480',
-    'https://crawfordcountynow.sagacom.com/files/2022/01/IMG_9704-586x480.jpeg',
     'https://s4.reutersmedia.net/resources/r/?m=02&d=20190312&t=2&i=1365547925&w=&fh=545&fw=810&ll=&pl=&sq=&r=2019-03-12T174119Z_32695_MRPRC14438F2680_RTRMADP_0_PEOPLE-MCGREGOR',
-    'https://crawfordcountynow.sagacom.com/files/2022/02/IMG_0157-640x480.jpg'
+    'https://i2-prod.mirror.co.uk/incoming/article7161921.ece/ALTERNATES/s1200c/David-Bowie.jpg',
+    'https://toplawyer.law/wp-content/uploads/2021/07/Funny-Mugshots-Eminem-Mugshot.jpg',
+    'https://toplawyer.law/wp-content/uploads/2022/01/Keanu-Reeves-Mugshot-Celebrity-Mugshots.jpg',
+    'https://toplawyer.law/wp-content/uploads/2021/07/Robert-Downey-Jr-Funny-Mugshots.jpg',
+    'https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/elvis-presley-mug-shot-vertical-tony-rubino.jpg',
+    'https://toplawyer.law/wp-content/uploads/2021/07/Khloe-Kardashian-Mugshot-Celebrity-Mugshots.jpg',
+    'https://toplawyer.law/wp-content/uploads/2021/07/Rapper-Mugshots-Snoop-Dog-mugshot.jpg',
+    'https://toplawyer.law/wp-content/uploads/2021/07/Lindsey-Lohan-Mugshot-Funny-Mugshots.jpg'
 ]
 
 with app.app_context():
@@ -133,14 +148,15 @@ with app.app_context():
         name="Boat",
         bio="I'm a boat",
         photo="https://www.galatiyachts.com/wp-content/uploads/163925496_10159410582658573_2772931438975323239_n.jpg",
-        email="boat@boat.com"
+        email="boat@boat.com",
+        is_admin=True
     )
     our_user.password_hash = "boat"
     users.append(our_user)
 
-    for i in range(10):
+    for i in range(11):
         user = User(
-            name=fake.name(),
+            name=profile_names[i],
             bio=fake.paragraph(nb_sentences=3),
             photo=profile_photos[i],
             email=fake.email()
