@@ -37,7 +37,7 @@ function Home() {
                 <ul key={index}>
                     <div className='div-post'>
                         <div>
-                            <img src={photo} className="img-post" />
+                            <img src={photo} className="img-post" alt={name} />
                             <span>{name}</span>
                         </div>
                         <p>{content}</p>
@@ -50,17 +50,17 @@ function Home() {
         return (
             <>
                 <button onClick={handleClickBack}>
-                    {index == 0 ? '---' : '←'}
+                    {index === 0 ? '---' : '←'}
                 </button>
                 <button onClick={handleClickForward}>
-                    {index == maxIndex ? '---' : '→'}
+                    {index === maxIndex ? '---' : '→'}
                 </button>
                 <ul>{postList}</ul>
                 <button onClick={handleClickBack}>
-                    {index == 0 ? '---' : '←'}
+                    {index === 0 ? '---' : '←'}
                 </button>
                 <button onClick={handleClickForward}>
-                    {index == maxIndex ? '---' : '→'}
+                    {index === maxIndex ? '---' : '→'}
                 </button>
             </>
         );
