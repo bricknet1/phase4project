@@ -31,7 +31,7 @@ function App() {
 
     return (
         <>
-            <NavBar setUser={setUser}></NavBar>
+            <NavBar user={user} setUser={setUser}></NavBar>
             <Switch>
                 <Route path="/login">
                     <Login setUser={setUser}/>
