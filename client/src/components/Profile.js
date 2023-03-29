@@ -18,9 +18,6 @@ function Profile({user}) {
     const [profile, setProfile] = useState({
         "name":'',
         "description":'',
-        "lethal":'',
-        "misdemeanor":'',
-        "felony":'',
         "date":'',
         "caught":'',
         "convicted":''

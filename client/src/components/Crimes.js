@@ -7,19 +7,23 @@ function Crimes({user}){
     const history = useHistory();
     const [crimes, setCrimes] = useState([]);
     const [newCrime, setNewCrime] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         fetch('/crimes')
         .then(res => res.json())
-        .then((data) => setCrimes(data.reverse()));
+        .then((data) => {
+            setCrimes(data.reverse())
+            setIsLoaded(current => !current);
+        });
     }, []);
 
     function newCrimeButton(){
         setNewCrime(current => !current)
     }
 
-    function editButton(){
-        console.log('edit');
+    function editButton(e){
+        history.push(`/crimes/${e.target.name}`)
     }
 
     function deleteButton(e){
@@ -36,7 +40,6 @@ function Crimes({user}){
     }
 
     const formik = useFormik({
-        // enableReinitialize: true,
         initialValues: {
             name: '',
             description: ''
@@ -65,8 +68,9 @@ function Crimes({user}){
         }
     })
 
-    if (user&&user.is_admin === false){
-        return <h1>NOT AUTHOIRIZED</h1>
+    if (!isLoaded) return <h1>Loading...</h1>;
+    if ((user&&user.is_admin === false) || (!user)) {
+        return <h1>...</h1>
     } else {
         return (
             <>
@@ -81,15 +85,13 @@ function Crimes({user}){
                     <br></br>
                     <input type='submit' value='Save' />
                 </form>
-
-
                 </div>:''}
                 <h2>Edit Available Crimes:</h2>
                 <div className="crimes">
                     <ul>
                         {crimes.map((crime, index) => (
                             <li key={index} className='singlecrime'>{crime.name}
-                                <button onClick={editButton}>Edit</button>
+                                <button onClick={editButton} name={crime.id}>Edit</button>
                                 <button onClick={deleteButton} name={crime.id}>Delete</button>
                                 <ul>
                                     <li>{crime.description}</li>
@@ -102,7 +104,6 @@ function Crimes({user}){
             </>
         )
     }
-
 }
 
 export default Crimes;
