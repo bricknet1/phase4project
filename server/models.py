@@ -45,6 +45,11 @@ class User(db.Model, SerializerMixin):
     friendships = db.relationship('Friendship', foreign_keys='Friendship.friend_id', backref='user')
     friend_ids = association_proxy('friendships', 'user_id')
 
+    messages = db.relationship('Message', foreign_keys='Message.sender_id', backref='sender')
+    # messages = db.relationship('Message', foreign_keys='Message.receiver_id', backref='receiver')
+    # sender_ids = association_proxy('messages', 'sender_id')
+    # receiver_ids = association_proxy('messages', 'receiver_id')
+
     @property
     def friends(self):
         friend_list = User.query.filter(User.id.in_(self.friend_ids)).all()
@@ -110,4 +115,12 @@ class Friendship(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     friend_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-# class Messages(db.Model, SerializerMixin):
+class Message(db.Model, SerializerMixin):
+    __tablename__ = 'messages'
+
+    serialize_rules = ('-sender',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    content = db.Column(db.String)

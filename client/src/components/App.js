@@ -9,7 +9,6 @@ import NewPost from './NewPost.js';
 import Crimes from './Crimes.js';
 import EditCrime from './EditCrime.js';
 
-
 function App() {
     const [user, setUser] = useState(null);
 
@@ -21,12 +20,12 @@ function App() {
         fetch('/authorized')
         .then(res => {
             if(res.ok){
-            res.json()
-            .then(data => {
-                setUser(data)
-            })
+                res.json()
+                .then(data => {
+                    setUser(data)
+                })
             } else {
-            setUser(null)
+                setUser(null)
             }
         })
     )

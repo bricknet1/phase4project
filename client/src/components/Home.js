@@ -40,7 +40,6 @@ function Home() {
     } else {
         const postList = posts.slice(index, index+5).map((post, index) => {    
             const { content, likes, user, user_id } = post;
-            console.log(post);
             const { name, photo } = user;
             
             return (
