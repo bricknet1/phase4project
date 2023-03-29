@@ -27,6 +27,13 @@
   margin-right: 17.5vw;
 }
 
+/* Home */
+.div-post {
+  background-color: grey;
+  margin: 20px 0;
+  width: 50%
+}
+
 /* BURGER */
 /* Position and sizing of burger button */
 .bm-burger-button {

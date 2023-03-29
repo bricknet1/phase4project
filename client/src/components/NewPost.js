@@ -24,11 +24,11 @@ function NewPost() {
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
-                        console.log(data)
+                        // console.log(data)
                         history.push('/home')
                     })
                 } else {
-                    console.log('nope')
+                    // console.log('nope')
                     res.json().then(error => console.log(error.message))
                 };
         })

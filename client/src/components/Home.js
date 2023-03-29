@@ -24,8 +24,8 @@ function Home() {
         }
     };
 
-    const handleClickPhoto = (e) => {
-        const user_id = e.target.getAttribute('user_id');
+    const handleClickPost = (e) => {
+        const user_id = e.currentTarget.getAttribute('user_id');
         history.push(`profile/${user_id}`)
     };
 
@@ -43,15 +43,13 @@ function Home() {
             const { name, photo } = user;
             
             return (
-                <ul key={index}>
-                    <div className='div-post'>
+                <ul key={index} >
+                    <div className='div-post' user_id={user_id} onClick={handleClickPost}>
                         <div>
                             <img 
-                              user_id={user_id}
                               src={photo} 
                               className="img-post" 
                               alt={name} 
-                              onClick={handleClickPhoto}
                             />
                             <span>{name}</span>
                         </div>
@@ -70,7 +68,9 @@ function Home() {
                 <button onClick={handleClickForward}>
                     {index === maxIndex ? '---' : '→'}
                 </button>
+
                 <ul>{postList}</ul>
+
                 <button onClick={handleClickBack}>
                     {index === 0 ? '---' : '←'}
                 </button>
