@@ -7,6 +7,7 @@ import Profile from './Profile.js';
 import NavBar from './NavBar.js';
 import NewPost from './NewPost.js';
 import Crimes from './Crimes.js';
+import EditCrime from './EditCrime.js';
 
 
 function App() {
@@ -46,7 +47,10 @@ function App() {
                 <Route path="/newpost" >
                     <NewPost />
                 </Route>
-                <Route path="/crimes" >
+                <Route path="/crimes/:id" exact>
+                    <EditCrime user={user}/>
+                </Route>
+                <Route path="/crimes" exact>
                     <Crimes user={user}/>
                 </Route>
             </Switch>  
