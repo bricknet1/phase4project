@@ -61,7 +61,6 @@ function Crimes({user}){
                         history.push('/crimes');
                     })
                 } else {
-                    console.log('nope')
                     res.json().then(error => console.log(error.message))
                 };
         })

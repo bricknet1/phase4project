@@ -6,14 +6,14 @@ import { useHistory } from 'react-router-dom';
 
 function Profile({user}) {
     
-    console.log(user);
+    // console.log(user);
 
     const history = useHistory();
     
     const {id} = useParams();
 
     const thisuser = user?user.id==id:false
-    console.log(thisuser);
+    // console.log(thisuser);
 
     const [profile, setProfile] = useState({
         "name":'',
@@ -56,12 +56,12 @@ function Profile({user}) {
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
-                        console.log(data)
+                        // console.log(data)
                         setProfile(data)
                         history.push('/profile/'+id)
                     })
                 } else {
-                    console.log('nope')
+                    // console.log('nope')
                     res.json().then(error => console.log(error.message))
                 };
         })

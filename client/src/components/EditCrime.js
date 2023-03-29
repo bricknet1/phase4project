@@ -32,12 +32,10 @@ function EditCrime({user}) {
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
-                        // console.log(data)
                         setCrime(data)
                         history.push('/crimes')
                     })
                 } else {
-                    console.log('nope')
                     res.json().then(error => console.log(error.message))
                 };
         })

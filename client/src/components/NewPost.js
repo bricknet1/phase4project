@@ -28,7 +28,7 @@ function NewPost({user}) {
                         history.push('/')
                     })
                 } else {
-                    console.log('nope')
+                    // console.log('nope')
                     res.json().then(error => console.log(error.message))
                 };
         })
