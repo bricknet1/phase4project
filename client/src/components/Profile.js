@@ -21,7 +21,8 @@ function Profile({user}) {
     });
     const [editMode, setEditMode] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [messages, setMessages] = useState([])
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
     // const [error, setError] = useState('');
     
     function handleClick(){
@@ -54,12 +55,10 @@ function Profile({user}) {
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
-                        // console.log(data)
                         setProfile(data)
                         history.push('/profile/'+id)
                     })
                 } else {
-                    // console.log('nope')
                     res.json().then(error => console.log(error.message))
                 };
         })
@@ -89,7 +88,6 @@ function Profile({user}) {
     messages.forEach(message => {
         if ((message.sender_id === parseInt(id)) || (message.receiver_id === parseInt(id))){theseMessages.push(message)}
     })
-    console.log(theseMessages);
     const messageRender = theseMessages.map((message, index) => {
         return(
             <>
@@ -98,12 +96,40 @@ function Profile({user}) {
         )
     })
 
-
-    if (!isLoaded) return <h1>Loading...</h1>;
-
-
     const {name, bio, photo, email, is_admin, crime_list} = profile
+    
+    function handleNewMessage(e){
+        setNewMessage(e.target.value)
+    }
 
+    function handleSubmitNewMessage(e){
+        e.preventDefault();
+        const values = {
+            content: newMessage,
+            sender_id: user.id,
+            receiver_id: id
+        }
+        fetch('/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(data => {
+                    theseMessages.push(data)
+                })
+            } else {
+                console.log('nope')
+                res.json().then(error => console.log(error.message))
+            };
+    })
+    }
+
+    
+    if (!isLoaded) return <h1>Loading...</h1>;
     return (
         <>
             <h1>{name}</h1>
@@ -142,6 +168,11 @@ function Profile({user}) {
             <div className='messages'>
                 <h3>Messages with this criminal:</h3>
                 {messageRender}
+                <form onSubmit={handleSubmitNewMessage}>
+                    <label >Send this criminal a new message: </label>
+                    <input type="text"  name="content" value={newMessage} onChange={handleNewMessage} />
+                    <input type='submit' value='Send' />
+                </form>
             </div>
         </>
     );
