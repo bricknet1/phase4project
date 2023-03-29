@@ -5,16 +5,17 @@ import * as yup from "yup";
 import { useHistory } from 'react-router-dom';
 
 function Profile({user}) {
-    
-    // console.log(user);
 
-    const history = useHistory();
+    const [editMode, setEditMode] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+    // const [error, setError] = useState('');
     
+    const history = useHistory();
+
     const {id} = useParams();
 
-    const thisuser = user?user.id==id:false
-    // console.log(thisuser);
-
+    const thisUser = user?user.id==id:false
+    
     const [profile, setProfile] = useState({
         "name":'',
         "description":'',
@@ -22,18 +23,29 @@ function Profile({user}) {
         "caught":'',
         "convicted":''
     });
-    const [editMode, setEditMode] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
-    // const [error, setError] = useState('');
     
-    function handleClick(){
+    let isAFriend = false;
+    if (user) {
+        const friendIds = user.friends.map(friend => friend.id);
+        isAFriend = thisUser ? false : friendIds.includes(parseInt(id));
+    }
+
+    
+    function handleClickEdit(){
         setEditMode(current=>!current)
     }
+
+    function handleClickAddFriend() {
+        console.log(id, user.id)
+    }
     
+    function handleClickRemoveFriend() {
+        console.log(id, user.id)
+    }
+
     const formSchema = yup.object().shape({
         email: yup.string().email()
     });
-
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -45,7 +57,7 @@ function Profile({user}) {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            handleClick();
+            handleClickEdit();
             fetch(`/users/${id}`, {
                 method: 'PATCH',
                 headers: {
@@ -56,21 +68,18 @@ function Profile({user}) {
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
-                        // console.log(data)
                         setProfile(data)
                         history.push('/profile/'+id)
                     })
                 } else {
-                    // console.log('nope')
                     res.json().then(error => console.log(error.message))
                 };
         })
         }
     })
 
-
-
     useEffect(()=>{
+        setIsLoaded(false)
         fetch('/users/'+id)
         .then(res=>res.json())
         .then((data) => {
@@ -79,20 +88,24 @@ function Profile({user}) {
         })
     }, [id])
 
-
     if (!isLoaded) return <h1>Loading...</h1>;
 
-
-    const {name, bio, photo, email, is_admin, crime_list} = profile
+    const {name, bio, photo, email, is_admin, crime_list, friends} = profile
 
     return (
         <>
+            <img src={photo} className="profile-photo" />
             <h1>{name}</h1>
             <p>{bio}</p>
-            <img src={photo} />
             <p>{email}</p>
             <p>Admin: {is_admin?'Yes':'No'}</p>
-            {thisuser?<button onClick={handleClick}>{editMode?'Close Editor Without Saving':'Edit Profile'}</button>:''}
+            {thisUser ? null : 
+                isAFriend ? 
+                    <button onClick={handleClickAddFriend}>Remove Friend</button> 
+                : 
+                    <button onClick={handleClickRemoveFriend}>Add Friend</button>
+            }
+            {thisUser?<button onClick={handleClickEdit}>{editMode?'Close Editor Without Saving':'Edit Profile'}</button>:''}
             {editMode?<div className='profile-edit'>
                 <form onSubmit={formik.handleSubmit} enableReinitialize>
                     <label >Name</label>
@@ -118,6 +131,28 @@ function Profile({user}) {
                             </ul>
                         </li>
                     ))}
+                </ul>
+            </div>
+            <div className="friends">
+                <h3>Friends:</h3>
+                <ul>
+                    {friends.map((friend, index) => {
+                        return (
+                            <li key={index}>
+                                <div 
+                                    className="friend-list-container"
+                                    onClick={() => history.push('/profile/'+friend.id)}
+                                >
+                                    <img 
+                                        className="img-friend-list"
+                                        src={friend.photo}
+                                        alt={friend.name}
+                                    />
+                                    <span>{friend.name}</span>
+                                </div>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
         </>

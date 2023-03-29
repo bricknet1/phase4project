@@ -27,11 +27,36 @@
   margin-right: 17.5vw;
 }
 
+ul {
+  list-style-type: none;
+}
+
 /* Home */
 .div-post {
   background-color: grey;
   margin: 20px 0;
   width: 50%
+}
+
+/* Profile */
+.profile-photo {
+  height: 30vh; 
+  width: 30vh;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 20px 0;
+}
+
+.friend-list-container {
+
+}
+
+.img-friend-list {
+  height: 10vh; 
+  width: 10vh;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 20px 0;
 }
 
 /* BURGER */
