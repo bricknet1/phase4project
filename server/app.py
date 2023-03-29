@@ -3,7 +3,7 @@
 from flask import request, make_response, session, jsonify, abort
 from flask_restful import Resource
 from werkzeug.exceptions import NotFound, Unauthorized
-from models import User, Post, Crime
+from models import User, Post, Crime, Message
 
 from config import app, db, api
 
@@ -135,6 +135,19 @@ class CrimeByID(Resource):
         db.session.commit()
         return make_response('', 204)
 api.add_resource(CrimeByID, '/crimes/<int:id>')
+
+class MessagesByID(Resource):
+    def get(self, id):
+        try:
+            sent = Message.query.filter_by(sender_id=id).all()
+            received = Message.query.filter_by(receiver_id=id).all()
+            combo = sent + received
+            sortcombo = sorted(combo, key=lambda message: message.id)
+
+            return make_response([each.to_dict() for each in sortcombo], 200)
+        except:
+            abort(404, "user not found")
+api.add_resource(MessagesByID, '/messages/<int:id>')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

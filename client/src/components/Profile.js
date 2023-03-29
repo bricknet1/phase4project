@@ -5,15 +5,12 @@ import * as yup from "yup";
 import { useHistory } from 'react-router-dom';
 
 function Profile({user}) {
-    
-    // console.log(user);
 
     const history = useHistory();
     
     const {id} = useParams();
-
+    
     const thisuser = user?user.id==id:false
-    // console.log(thisuser);
 
     const [profile, setProfile] = useState({
         "name":'',
@@ -24,6 +21,7 @@ function Profile({user}) {
     });
     const [editMode, setEditMode] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [messages, setMessages] = useState([])
     // const [error, setError] = useState('');
     
     function handleClick(){
@@ -80,6 +78,27 @@ function Profile({user}) {
     }, [id])
 
 
+    useEffect(() => {
+        if(user){
+        fetch('/messages/'+user.id)
+        .then(res => res.json())
+        .then((data) => setMessages(data));
+        }
+    }, [user]);
+    let theseMessages = []
+    messages.forEach(message => {
+        if ((message.sender_id === parseInt(id)) || (message.receiver_id === parseInt(id))){theseMessages.push(message)}
+    })
+    console.log(theseMessages);
+    const messageRender = theseMessages.map((message, index) => {
+        return(
+            <>
+                <p>{(message.sender_id === user.id)?"Me: ":profile.name+": "}{message.content}</p>
+            </>
+        )
+    })
+
+
     if (!isLoaded) return <h1>Loading...</h1>;
 
 
@@ -119,6 +138,10 @@ function Profile({user}) {
                         </li>
                     ))}
                 </ul>
+            </div>
+            <div className='messages'>
+                <h3>Messages with this criminal:</h3>
+                {messageRender}
             </div>
         </>
     );
