@@ -70,7 +70,7 @@ class User(db.Model, SerializerMixin):
 class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
 
-    serialize_rules = ('-user.bio', '-user.crime_list', '-user.email', '-user.id', '-user.is_admin')
+    serialize_rules = ('-user.bio', '-user.crime_list', '-user.email', '-user.id', '-user.is_admin', '-user.friendships')
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String)

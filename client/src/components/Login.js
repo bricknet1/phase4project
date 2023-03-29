@@ -32,13 +32,11 @@ function Login({ setUser }) {
             .then(res => {
                 if (res.ok) {
                     res.json().then(user => {
-                        console.log(user)
                         setUser(user)
                         if (signup){history.push('/profile/'+user.id)}
                         else {history.push('/')}
                     })
                 } else {
-                    console.log('nope')
                     res.json().then(error => setError(error.message))
                 };
             })

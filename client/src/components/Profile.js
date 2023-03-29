@@ -5,13 +5,13 @@ import * as yup from "yup";
 import { useHistory } from 'react-router-dom';
 
 function Profile({user}) {
-    
+
     const history = useHistory();
     
     const {id} = useParams();
     
     const thisuser = user?user.id==id:false
-    
+
     const [profile, setProfile] = useState({
         "name":'',
         "description":'',
@@ -54,12 +54,12 @@ function Profile({user}) {
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
-                        console.log(data)
+                        // console.log(data)
                         setProfile(data)
                         history.push('/profile/'+id)
                     })
                 } else {
-                    console.log('nope')
+                    // console.log('nope')
                     res.json().then(error => console.log(error.message))
                 };
         })
