@@ -35,7 +35,7 @@ function Login({ setUser }) {
                         console.log(user)
                         setUser(user)
                         if (signup){history.push('/profile/'+user.id)}
-                        else {history.push('/home')}
+                        else {history.push('/')}
                     })
                 } else {
                     console.log('nope')

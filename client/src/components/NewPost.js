@@ -2,7 +2,7 @@ import { useFormik } from "formik";
 import { useHistory } from 'react-router-dom';
 // import { useState } from 'react';
 
-function NewPost() {
+function NewPost({user}) {
 
     const history = useHistory();
     // const [error, setError] = useState('');
@@ -25,7 +25,7 @@ function NewPost() {
                 if (res.ok) {
                     res.json().then(data => {
                         console.log(data)
-                        history.push('/home')
+                        history.push('/')
                     })
                 } else {
                     console.log('nope')
@@ -35,6 +35,9 @@ function NewPost() {
         }
     })
 
+    if (!user) {
+        return <h1>Not Authorized</h1>
+    } else {
     return(
         <div className='new-post'>
             <form onSubmit={formik.handleSubmit}>
@@ -43,7 +46,7 @@ function NewPost() {
                 <input type='submit' value='Submit' />
             </form>
         </div>
-    )
+    )}
 }
 
 export default NewPost;

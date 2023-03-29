@@ -14,6 +14,7 @@ class Signup(Resource):
         user.password_hash = data['password']
         db.session.add(user)
         db.session.commit()
+        session['user_id'] = user.id
         return make_response(user.to_dict(), 201)
 api.add_resource(Signup, '/signup')
 
