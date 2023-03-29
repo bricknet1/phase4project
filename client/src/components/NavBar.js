@@ -12,7 +12,7 @@ function NavBar({ user, setUser }){
         .then(res => {
             if(res.ok){
                 setUser(null)
-                history.push('/home')
+                history.push('/')
             }
         })
     };
@@ -33,10 +33,10 @@ function NavBar({ user, setUser }){
                 /> 
             : null}
             <Menu right width={'15%'}>
-                <a id="home" className="menu-item" href="/home">Home</a>
+                <a id="home" className="menu-item" href="/">Home</a>
                 {user ? 
                     <>
-                        <a id="logout" className="bm-item" href="/logout" onClick={handleLogout}>Logout</a>
+                        <a id="logout" className="bm-item" href="/login" onClick={handleLogout}>Logout</a>
                         <br />
                         <a id="my-profile" className="bm-item" href={`profile/${user.id}`}>My Profile</a>
                         <br />
