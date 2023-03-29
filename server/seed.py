@@ -3,7 +3,7 @@ from faker import Faker
 import random
 
 from app import app
-from models import db, Crime, User, UserCrime, Post
+from models import db, Crime, User, UserCrime, Post, Friendship
 
 fake = Faker()
 
@@ -23,7 +23,7 @@ profile_names = [
 
 profile_photos = [
     'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/MSNBC/Components/Slideshows/_production/_archive/Entertainment/_Celebrity-Evergreen/ss_070724_celebmugs/today-justin-bieber-mugshot-140123.jpg',
-    'https://dss.fosterwebmarketing.com/upload/1055/th-mugshot.jpg',
+    'https://imgix.ranker.com/user_node_img/50132/1002626839/original/1002626839-photo-u-2139348710?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
     'https://s4.reutersmedia.net/resources/r/?m=02&d=20190312&t=2&i=1365547925&w=&fh=545&fw=810&ll=&pl=&sq=&r=2019-03-12T174119Z_32695_MRPRC14438F2680_RTRMADP_0_PEOPLE-MCGREGOR',
     'https://i2-prod.mirror.co.uk/incoming/article7161921.ece/ALTERNATES/s1200c/David-Bowie.jpg',
     'https://toplawyer.law/wp-content/uploads/2021/07/Funny-Mugshots-Eminem-Mugshot.jpg',
@@ -41,8 +41,10 @@ with app.app_context():
     User.query.delete()
     UserCrime.query.delete()
     Post.query.delete()
+    Friendship.query.delete()
 
     # Create some crimes
+    print('Creating crimes...')
     crime1 = Crime(
         name="Triple Bingo",
         description="Hosting more than 2 games of bingo for seniors per week in the state of Minnesota",
@@ -142,6 +144,7 @@ with app.app_context():
     crimes = [crime1, crime2, crime3, crime4, crime5, crime6, crime7]
 
     # Create some users
+    print('Creating users...')
     users = []
 
     our_user = User(
@@ -165,6 +168,7 @@ with app.app_context():
         users.append(user)
 
     # Create some user crimes
+    print('Creating user crimes...')
     usercrimes = []
     for i in range(20):
         caught = random.choice([True, False])
@@ -178,6 +182,7 @@ with app.app_context():
         usercrimes.append(usercrime)
 
     # Create some posts
+    print('Creating posts...')
     posts = []
     for i in range(24):
         post = Post(
@@ -187,8 +192,75 @@ with app.app_context():
         )
         posts.append(post)
 
+    # Create some friendships
+    print('Creating friendships...')
+    friendships = [
+        Friendship(user_id=1, friend_id=2),
+        Friendship(user_id=1, friend_id=3),
+        Friendship(user_id=1, friend_id=4),
+        Friendship(user_id=1, friend_id=5),
+        Friendship(user_id=1, friend_id=6),
+        Friendship(user_id=1, friend_id=7),
+        Friendship(user_id=1, friend_id=8),
+        Friendship(user_id=1, friend_id=9),
+        Friendship(user_id=1, friend_id=10),
+        Friendship(user_id=1, friend_id=11),
+
+        Friendship(user_id=2, friend_id=1),
+        Friendship(user_id=2, friend_id=3),
+        Friendship(user_id=2, friend_id=7),
+        Friendship(user_id=2, friend_id=9),
+        Friendship(user_id=2, friend_id=10),
+
+        Friendship(user_id=3, friend_id=1),
+        Friendship(user_id=3, friend_id=2),
+        Friendship(user_id=3, friend_id=6),
+        Friendship(user_id=3, friend_id=11),
+
+        Friendship(user_id=4, friend_id=1),
+        Friendship(user_id=4, friend_id=5),
+        Friendship(user_id=4, friend_id=10),
+
+        Friendship(user_id=5, friend_id=1),
+        Friendship(user_id=5, friend_id=4),
+        Friendship(user_id=5, friend_id=8),
+        Friendship(user_id=5, friend_id=11),
+
+        Friendship(user_id=6, friend_id=1),
+        Friendship(user_id=6, friend_id=3),
+        Friendship(user_id=6, friend_id=9),
+
+        Friendship(user_id=7, friend_id=1),
+        Friendship(user_id=7, friend_id=2),
+        Friendship(user_id=7, friend_id=8),
+        Friendship(user_id=7, friend_id=11),
+
+        Friendship(user_id=8, friend_id=1),
+        Friendship(user_id=8, friend_id=5),
+        Friendship(user_id=8, friend_id=7),
+
+        Friendship(user_id=9, friend_id=1),
+        Friendship(user_id=9, friend_id=2),
+        Friendship(user_id=9, friend_id=6),
+        Friendship(user_id=9, friend_id=11),
+
+        Friendship(user_id=10, friend_id=1),
+        Friendship(user_id=10, friend_id=2),
+        Friendship(user_id=10, friend_id=4),
+
+        Friendship(user_id=11, friend_id=1),
+        Friendship(user_id=11, friend_id=3),
+        Friendship(user_id=11, friend_id=5),
+        Friendship(user_id=11, friend_id=7),
+        Friendship(user_id=11, friend_id=9),
+    ]
+
+    print('Adding to database...')
     db.session.add_all(crimes)
     db.session.add_all(users)
     db.session.add_all(usercrimes)
     db.session.add_all(posts)
+    db.session.add_all(friendships)
     db.session.commit()
+
+    print('Donzoe')

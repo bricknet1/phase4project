@@ -7,7 +7,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    serialize_rules = ('-_password_hash', '-user_crimes', 'crime_list', '-posts',)
+    serialize_rules = ('-_password_hash', '-user_crimes', 'crime_list', '-posts')
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -42,6 +42,14 @@ class User(db.Model, SerializerMixin):
 
     posts = db.relationship('Post', backref='user')
 
+    friendships = db.relationship('Friendship', foreign_keys='Friendship.friend_id', backref='user')
+    friend_ids = association_proxy('friendships', 'user_id')
+
+    @property
+    def friends(self):
+        friend_list = User.query.filter(User.id.in_(self.friend_ids)).all()
+        return [f.name for f in friend_list]
+
     @hybrid_property
     def password_hash(self):
         return self._password_hash
@@ -64,12 +72,11 @@ class Post(db.Model, SerializerMixin):
     likes = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-# class Friendship(db.Model, SerializerMixin):
 
 class Crime(db.Model, SerializerMixin):
     __tablename__ = 'crimes'
 
-    # serialize_rules = ()
+    serialize_rules = ()
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
@@ -81,7 +88,6 @@ class Crime(db.Model, SerializerMixin):
     user_crimes = db.relationship('UserCrime', backref='crime', cascade='all, delete-orphan')
 
     users = association_proxy('user_crimes', 'user')
-    # date = association_proxy('user_crimes', 'date')
 
 class UserCrime(db.Model, SerializerMixin):
     __tablename__ = 'user_crimes'
@@ -94,5 +100,14 @@ class UserCrime(db.Model, SerializerMixin):
     date = db.Column(db.String)
     caught = db.Column(db.Boolean)
     convicted = db.Column(db.Boolean)
+
+class Friendship(db.Model, SerializerMixin):
+    __tablename__ = 'friendships'
+
+    serialize_rules = ('-user_id', '-friend_id', '-user', '-friend')
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    friend_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 # class Messages(db.Model, SerializerMixin):
