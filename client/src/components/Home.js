@@ -30,7 +30,7 @@ function Home() {
     };
 
     const handleClickLike = (e) => {
-        
+        console.log()
     };
 
     useEffect(() => {
@@ -58,7 +58,7 @@ function Home() {
                             <span>{name}</span>
                         </div>
                         <p>{content}</p>
-                        <span onClick={handleClickLike}>❤ {likes}</span>
+                        {/* <span onClick={handleClickLike}>❤ {likes}</span> */}
                     </div>
                 </ul>
             );
