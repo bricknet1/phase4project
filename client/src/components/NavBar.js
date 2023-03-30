@@ -1,9 +1,21 @@
-import {slide as Menu} from 'react-burger-menu'
-import { useHistory } from 'react-router-dom'
+import Menu from 'react-burger-menu/lib/menus/slide'
+import { useHistory, NavLink } from 'react-router-dom'
+import { useState } from 'react';
 
 function NavBar({ user, setUser }){
 
     const history = useHistory()
+
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const handleClickMenuItem = () => {
+        console.log('boing');
+        setMenuOpen(false);
+    };
+
+    const handleStateChange = (state) => {
+        setMenuOpen(state.isOpen)
+    };
 
     const handleLogout = () => {
         fetch('/logout', {
@@ -32,23 +44,62 @@ function NavBar({ user, setUser }){
                     onClick={handleClickProfile}
                 /> 
             : null}
-            <Menu right width={'15%'}>
-                <a id="home" className="menu-item" href="/">Home</a>
+            <Menu 
+                right 
+                width={'250px'} 
+                isOpen={menuOpen} 
+                onStateChange={handleStateChange}
+            >
+                <NavLink 
+                    id="home" 
+                    className="menu-item" 
+                    exact 
+                    to="/" 
+                    onClick={handleClickMenuItem}
+                >Home</NavLink>
                 {user ? 
                     <>
-                        <a id="logout" className="bm-item" href="/login" onClick={handleLogout}>Logout</a>
+                        <NavLink 
+                            id="logout" 
+                            className="bm-item" 
+                            to="/login" 
+                            onClick={() => {
+                                handleLogout();
+                                handleClickMenuItem();
+                            }}
+                        >Logout</NavLink>
                         <br />
-                        <a id="my-profile" className="bm-item" href={`profile/${user.id}`}>My Profile</a>
+                        <NavLink 
+                            id="my-profile" 
+                            className="bm-item" 
+                            to={`/profile/${user.id}`}
+                            onClick={handleClickMenuItem}
+                        >My Profile</NavLink>
                         <br />
-                        <a id="make-post" className="bm-item" href="/newpost">Make a Post</a>
+                        <NavLink 
+                            id="make-post" 
+                            className="bm-item" 
+                            to="/newpost"
+                            onClick={handleClickMenuItem}
+                        >Make a Post</NavLink>
                         {user.is_admin ? 
                             <>
                                 <br />
-                                <a id="edit-crimes" className="bm-item" href="/crimes" >Edit Crimes</a> 
+                                <NavLink 
+                                    id="edit-crimes" 
+                                    className="bm-item" 
+                                    to="/crimes"
+                                    onClick={handleClickMenuItem} 
+                                >Edit Crimes</NavLink> 
                             </>
                         : null}
                     </>
-                    : <a id="login" className="bm-item" href="/login">Login</a>
+                    : 
+                    <NavLink 
+                          id="login" 
+                          className="bm-item" 
+                          to="/login"
+                    >Login</NavLink>
                     
                 }
                 

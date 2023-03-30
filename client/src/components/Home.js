@@ -47,12 +47,12 @@ function Home() {
             const { name, photo } = user;
             
             return (
-                <ul key={index} >
+                <ul key={index} className='post-container'>
                     <div className='div-post' user_id={user_id} onClick={handleClickPost}>
-                        <div>
+                        <div className='post-img-name-container'>
                             <img 
                               src={photo} 
-                              className="img-post" 
+                              className='img-post' 
                               alt={name} 
                             />
                             <span>{name}</span>
@@ -66,21 +66,25 @@ function Home() {
 
         return (
             <>
-                <button onClick={handleClickBack}>
-                    {index === 0 ? '---' : '←'}
-                </button>
-                <button onClick={handleClickForward}>
-                    {index === maxIndex ? '---' : '→'}
-                </button>
+                <div className='scroll-button-container'>
+                    <button className='scroll-button' onClick={handleClickBack}>
+                        {index === 0 ? '---' : '←'}
+                    </button>
+                    <button className='scroll-button' onClick={handleClickForward}>
+                        {index === maxIndex ? '---' : '→'}
+                    </button>
+                </div>
 
                 <ul>{postList}</ul>
 
-                <button onClick={handleClickBack}>
-                    {index === 0 ? '---' : '←'}
-                </button>
-                <button onClick={handleClickForward}>
-                    {index === maxIndex ? '---' : '→'}
-                </button>
+                <div className='scroll-button-container'>
+                    <button className='scroll-button' onClick={handleClickBack}>
+                        {index === 0 ? '---' : '←'}
+                    </button>
+                    <button className='scroll-button' onClick={handleClickForward}>
+                        {index === maxIndex ? '---' : '→'}
+                    </button>
+                </div>
             </>
         );
     };
