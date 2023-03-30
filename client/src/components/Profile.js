@@ -15,7 +15,7 @@ function Profile({user}) {
 
     const {id} = useParams();
 
-    const thisuser = user?user.id==id:false
+    const thisUser = user?user.id==id:false
     
     const [profile, setProfile] = useState({
         "name":'',
@@ -118,13 +118,14 @@ function Profile({user}) {
 
     useEffect(() => {
         if(user){
-        fetch('/messages/'+user.id)
-        .then(res => res.json())
-        .then((data) => data.forEach(message => {
-            if ((message.sender_id === parseInt(id)) || (message.receiver_id === parseInt(id))){setMessages(messages => [...messages, message])}
+            setMessages([])
+            fetch('/messages/'+user.id)
+            .then(res => res.json())
+            .then((data) => data.forEach(message => {
+                if ((message.sender_id === parseInt(id)) || (message.receiver_id === parseInt(id))){setMessages(messages => [...messages, message])}
         }))
         }
-    }, [user]);
+    }, [user, id]);
 
     const messageRender = messages.map((message, index) => {
         return(
