@@ -214,5 +214,15 @@ class UserCrimes(Resource):
         return make_response(usercrime.to_dict(rules=('crime',)), 201)
 api.add_resource(UserCrimes, '/usercrimes')
 
+class UserCrimesByID(Resource):
+    def delete(self, id):
+        usercrime = UserCrime.query.filter_by(id=id).first()
+        if not usercrime:
+            raise NotFound
+        db.session.delete(usercrime)
+        db.session.commit()
+        return make_response('', 204)
+api.add_resource(UserCrimesByID, '/usercrimes/<int:id>')
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

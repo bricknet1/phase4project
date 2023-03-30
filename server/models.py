@@ -28,6 +28,7 @@ class User(db.Model, SerializerMixin):
             for each in crime.user_crimes:
                 if each.user_id == self.id:
                     crimedict = {
+                        "id":each.id,
                         "name":crime.name,
                         "description":crime.description,
                         "lethal":crime.lethal,
