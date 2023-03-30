@@ -23,7 +23,6 @@ function Profile({user}) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
-    // const [error, setError] = useState('');
     
     function handleClick(){
         setEditMode(current=>!current)
@@ -32,7 +31,6 @@ function Profile({user}) {
     const formSchema = yup.object().shape({
         email: yup.string().email()
     });
-
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -65,8 +63,6 @@ function Profile({user}) {
         }
     })
 
-
-
     useEffect(()=>{
         fetch('/users/'+id)
         .then(res=>res.json())
@@ -76,32 +72,26 @@ function Profile({user}) {
         })
     }, [id])
 
-
     useEffect(() => {
         if(user){
         fetch('/messages/'+user.id)
         .then(res => res.json())
-        .then((data) => setMessages(data));
+        .then((data) => data.forEach(message => {
+            if ((message.sender_id === parseInt(id)) || (message.receiver_id === parseInt(id))){setMessages(messages => [...messages, message])}
+        }))
         }
     }, [user]);
-    let theseMessages = []
-    messages.forEach(message => {
-        if ((message.sender_id === parseInt(id)) || (message.receiver_id === parseInt(id))){theseMessages.push(message)}
-    })
-    const messageRender = theseMessages.map((message, index) => {
+
+    const messageRender = messages.map((message, index) => {
         return(
-            <>
-                <p>{(message.sender_id === user.id)?"Me: ":profile.name+": "}{message.content}</p>
-            </>
+            <p key={index}>{(message.sender_id === user.id)?"Me: ":profile.name+": "}{message.content}</p>
         )
     })
 
-    const {name, bio, photo, email, is_admin, crime_list} = profile
-    
     function handleNewMessage(e){
         setNewMessage(e.target.value)
     }
-
+    
     function handleSubmitNewMessage(e){
         e.preventDefault();
         const values = {
@@ -119,15 +109,16 @@ function Profile({user}) {
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
-                    theseMessages.push(data)
+                    setMessages([...messages, data])
                 })
             } else {
                 console.log('nope')
                 res.json().then(error => console.log(error.message))
             };
-    })
+        })
     }
-
+    
+    const {name, bio, photo, email, is_admin, crime_list} = profile
     
     if (!isLoaded) return <h1>Loading...</h1>;
     return (
