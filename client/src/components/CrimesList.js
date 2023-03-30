@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useFormik } from "formik";
-import { useHistory } from 'react-router-dom';
 
 function CrimesList({user}){
 
-    const [profile, setProfile] = useState({});
     const [isLoaded, setIsLoaded] = useState(false);
     const [crimes, setCrimes] = useState([]);
     const [myCrimes, setMyCrimes] = useState([]);
@@ -23,7 +21,6 @@ function CrimesList({user}){
             fetch('/users/'+user.id)
             .then(res=>res.json())
             .then((data) => {
-                setProfile(data);
                 setIsLoaded(current => !current);
                 setMyCrimes(data.crime_list.sort((x, y) => (x.data < y.date) ? 1 : (x.date > y.date) ? -1 : 0))
             })
@@ -62,6 +59,19 @@ function CrimesList({user}){
         }
     })
 
+    function handleDelete(e){
+        if(window.confirm('Are you sure you want to delete this crime? Click OK to confirm.') === true){
+            fetch('/usercrimes/'+e.target.id, {
+                method: "DELETE",
+            })
+            .then(res => {
+                if(res.ok){
+                    setMyCrimes(crimes=> crimes.filter((crime) => parseInt(crime.id)!==parseInt(e.target.id)))
+                }
+            })
+        }
+    }
+
     if(!user||!isLoaded){return(<h3>Loading...</h3>)}
     if(user&&isLoaded){
         return(
@@ -92,7 +102,7 @@ function CrimesList({user}){
                     <h3>Crimes:</h3>
                     <ul>
                         {myCrimes.map((crime, index) => (
-                            <li key={index}>{crime.name}
+                            <li key={index}>{crime.name} - <span className='deletecrime' id={crime.id} onClick={handleDelete}>Delete This Crime</span>
                                 <ul>
                                     <li>Date committed: {crime.date}</li>
                                     <li>Caught: {crime.caught?"Yes":"No!"}</li>

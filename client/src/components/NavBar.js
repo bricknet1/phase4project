@@ -9,7 +9,6 @@ function NavBar({ user, setUser }){
     const [menuOpen, setMenuOpen] = useState(false);
 
     const handleClickMenuItem = () => {
-        console.log('boing');
         setMenuOpen(false);
     };
 
@@ -60,16 +59,6 @@ function NavBar({ user, setUser }){
                 {user ? 
                     <>
                         <NavLink 
-                            id="logout" 
-                            className="bm-item" 
-                            to="/login" 
-                            onClick={() => {
-                                handleLogout();
-                                handleClickMenuItem();
-                            }}
-                        >Logout</NavLink>
-                        <br />
-                        <NavLink 
                             id="my-profile" 
                             className="bm-item" 
                             to={`/profile/${user.id}`}
@@ -81,7 +70,7 @@ function NavBar({ user, setUser }){
                             className="bm-item" 
                             to="/newpost"
                             onClick={handleClickMenuItem}
-                        >Make a Post</NavLink>
+                        >Make a New Post</NavLink>
                         {user.is_admin ? 
                             <>
                                 <br />
@@ -90,15 +79,25 @@ function NavBar({ user, setUser }){
                                     className="bm-item" 
                                     to="/crimes"
                                     onClick={handleClickMenuItem} 
-                                >Edit Crimes</NavLink> 
+                                >Edit All Crimes (admin)</NavLink> 
                             </>
                         : null}
+                        <NavLink 
+                            id="logout" 
+                            className="bm-item" 
+                            to="/login" 
+                            onClick={() => {
+                                handleLogout();
+                                handleClickMenuItem();
+                            }}
+                        >Logout</NavLink>
+                        <br />
                     </>
                     : 
                     <NavLink 
-                          id="login" 
-                          className="bm-item" 
-                          to="/login"
+                        id="login" 
+                        className="bm-item" 
+                        to="/login"
                     >Login</NavLink>
                     
                 }

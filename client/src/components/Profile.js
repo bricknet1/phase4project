@@ -15,7 +15,7 @@ function Profile({user}) {
 
     const {id} = useParams();
 
-    const thisUser = user?user.id==id:false
+    const thisUser = user?user.id===parseInt(id):false
     
     const [profile, setProfile] = useState({
         "name":'',
@@ -48,7 +48,6 @@ function Profile({user}) {
         })
         .then(res => {
             if (res.ok) {
-                res.json().then(data => console.log(data));
                 isAFriend = true;
                 window.location.reload(true);
             } else console.log('error adding friend');
@@ -56,7 +55,6 @@ function Profile({user}) {
     }
     
     function handleClickRemoveFriend() {
-        console.log(id, user.id)
         fetch('/friendships', {
             method: 'DELETE',
             headers: {
@@ -166,7 +164,6 @@ function Profile({user}) {
                     setNewMessage('');
                 })
             } else {
-                console.log('nope')
                 res.json().then(error => console.log(error.message))
             };
         })
