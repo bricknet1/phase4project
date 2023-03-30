@@ -14,6 +14,7 @@ function Profile({user}) {
 
     const {id} = useParams();
 
+    
     const thisUser = user?user.id==id:false
     
     const [profile, setProfile] = useState({
@@ -29,18 +30,44 @@ function Profile({user}) {
         const friendIds = user.friends.map(friend => friend.id);
         isAFriend = thisUser ? false : friendIds.includes(parseInt(id));
     }
-
+    
     
     function handleClickEdit(){
         setEditMode(current=>!current)
     }
-
+    
     function handleClickAddFriend() {
-        console.log(id, user.id)
+        fetch('/friendships', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: parseInt(id),
+                friend_id: parseInt(user.id)
+            })
+        })
+          .then(res => {
+            if (res.ok) {
+                res.json().then(data => console.log(data));
+                // window.location.reload(false);
+            } else console.log('error adding friend');
+          })
     }
     
     function handleClickRemoveFriend() {
         console.log(id, user.id)
+        fetch('/friendships', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: parseInt(user.id),
+                friend_id: parseInt(id)
+            })
+        })
+          .catch(err => console.log(err))
     }
 
     const formSchema = yup.object().shape({
@@ -101,9 +128,9 @@ function Profile({user}) {
             <p>Admin: {is_admin?'Yes':'No'}</p>
             {thisUser ? null : 
                 isAFriend ? 
-                    <button onClick={handleClickAddFriend}>Remove Friend</button> 
+                    <button onClick={handleClickRemoveFriend}>Remove Friend</button> 
                 : 
-                    <button onClick={handleClickRemoveFriend}>Add Friend</button>
+                    <button onClick={handleClickAddFriend}>Add Friend</button>
             }
             {thisUser?<button onClick={handleClickEdit}>{editMode?'Close Editor Without Saving':'Edit Profile'}</button>:''}
             {editMode?<div className='profile-edit'>
