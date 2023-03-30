@@ -44,7 +44,12 @@ function NavBar({ user, setUser }){
                     onClick={handleClickProfile}
                 /> 
             : null}
-            <Menu right width={'15%'} isOpen={menuOpen} onStateChange={handleStateChange}>
+            <Menu 
+                right 
+                width={'250px'} 
+                isOpen={menuOpen} 
+                onStateChange={handleStateChange}
+            >
                 <NavLink 
                     id="home" 
                     className="menu-item" 
