@@ -134,19 +134,11 @@ ul {
 .sent-message {
   color: var(--red);
   text-align: right;
-  /* margin-left: 200px; */
-  /* float: right; */
-}
-
-.sent-message p {
-
 }
 
 .received-message {
   color: var(--dark-grey);
   text-align: left;
-  /* margin-right: 200px; */
-  /* float: left; */
 }
 
 .profile-photo {
@@ -157,8 +149,14 @@ ul {
   border: 3px solid var(--red);
 }
 
-.friend-list-container {
+.profile-edit {
+  border: 5px solid var(--red);
+  margin-top: 10px;
+}
 
+.profile-edit input, label {
+  display: block;
+  margin: 10px auto;
 }
 
 .friend-container {
