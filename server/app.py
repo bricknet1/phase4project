@@ -4,7 +4,7 @@ from flask import request, make_response, session, jsonify, abort
 from flask_restful import Resource
 from werkzeug.exceptions import NotFound, Unauthorized
 
-from models import User, Post, Crime, Message, Friendship
+from models import User, Post, Crime, Message, Friendship, UserCrime
 from config import app, db, api
 
 class Signup(Resource):
@@ -199,6 +199,20 @@ class Messages(Resource):
         return response
 api.add_resource(Messages, '/messages')
 
+class UserCrimes(Resource):
+    def post(self):
+        data = request.get_json()
+        usercrime = UserCrime(
+            user_id=data['user_id'],
+            crime_id=data['crime_id'],
+            date=data['date'],
+            caught=data['caught'],
+            convicted=data['convicted']
+        )
+        db.session.add(usercrime)
+        db.session.commit()
+        return make_response(usercrime.to_dict(rules=('crime',)), 201)
+api.add_resource(UserCrimes, '/usercrimes')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

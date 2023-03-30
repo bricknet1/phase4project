@@ -198,6 +198,7 @@ function Profile({user}) {
             </div>:''}
             <div className="crimes">
                 <h3>Crimes:</h3>
+                {thisUser?<a href='/crimeslist'>Add More Crimes</a>:null}
                 <ul>
                     {crime_list.map((crime, index) => (
                         <li key={index}>{crime.name}
