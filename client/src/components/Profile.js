@@ -169,7 +169,7 @@ function Profile({user}) {
         })
     }
     
-    const {name, bio, photo, email, is_admin, crime_list, friends} = profile
+    const {name, bio, photo, crime_list, friends} = profile
 
     if (!isLoaded) return <h1>Loading...</h1>;
 
@@ -202,7 +202,7 @@ function Profile({user}) {
             <div className='profile-middle-container'>
                 {/* profile info */}
                 <div className='profile-info-container'>
-                    <img src={photo} className="profile-photo" />
+                    <img src={photo} alt={name} className="profile-photo" />
                     <h1>{name}</h1>
                     <p>{bio}</p>
                     {thisUser||!user ? null : 
