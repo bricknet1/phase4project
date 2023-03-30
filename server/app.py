@@ -149,5 +149,19 @@ class MessagesByID(Resource):
             abort(404, "user not found")
 api.add_resource(MessagesByID, '/messages/<int:id>')
 
+class Messages(Resource):
+    def post(self):
+        data = request.get_json()
+        message = Message(
+            sender_id=data['sender_id'],
+            receiver_id=data['receiver_id'],
+            content=data['content']
+        )
+        db.session.add(message)
+        db.session.commit()
+        response = make_response(message.to_dict(), 200)
+        return response
+api.add_resource(Messages, '/messages')
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
