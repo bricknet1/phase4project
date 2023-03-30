@@ -46,13 +46,13 @@ function Profile({user}) {
                 friend_id: parseInt(user.id)
             })
         })
-          .then(res => {
+        .then(res => {
             if (res.ok) {
                 res.json().then(data => console.log(data));
                 isAFriend = true;
                 window.location.reload(true);
             } else console.log('error adding friend');
-          })
+        })
     }
     
     function handleClickRemoveFriend() {
@@ -67,7 +67,7 @@ function Profile({user}) {
                 friend_id: parseInt(id)
             })
         })
-          .catch(err => console.log(err))
+        .catch(err => console.log(err))
         window.location.reload(true);
     }
 
@@ -165,7 +165,7 @@ function Profile({user}) {
     }
     
     const {name, bio, photo, email, is_admin, crime_list, friends} = profile
-  
+
     if (!isLoaded) return <h1>Loading...</h1>;
 
     return (
@@ -175,7 +175,7 @@ function Profile({user}) {
             <p>{bio}</p>
             <p>{email}</p>
             <p>Admin: {is_admin?'Yes':'No'}</p>
-            {thisUser ? null : 
+            {thisUser||!user ? null : 
                 isAFriend ? 
                     <button onClick={handleClickRemoveFriend}>Remove Friend</button> 
                 : 
@@ -233,7 +233,7 @@ function Profile({user}) {
                 </ul>
             </div>    
 
-            <div className='messages'>
+            {user&&!thisUser?<div className='messages'>
                 <h3>Messages with this criminal:</h3>
                 {messageRender}
                 <form onSubmit={handleSubmitNewMessage}>
@@ -241,7 +241,7 @@ function Profile({user}) {
                     <input type="text"  name="content" value={newMessage} onChange={handleNewMessage} />
                     <input type='submit' value='Send' />
                 </form>
-            </div>
+            </div>:null}
         </>
     );
 }
