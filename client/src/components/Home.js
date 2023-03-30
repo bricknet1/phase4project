@@ -29,6 +29,10 @@ function Home() {
         history.push(`profile/${user_id}`)
     };
 
+    const handleClickLike = (e) => {
+        
+    };
+
     useEffect(() => {
         fetch('/posts')
           .then(res => res.json())
@@ -54,7 +58,7 @@ function Home() {
                             <span>{name}</span>
                         </div>
                         <p>{content}</p>
-                        <span>❤ {likes}</span>
+                        <span onClick={handleClickLike}>❤ {likes}</span>
                     </div>
                 </ul>
             );

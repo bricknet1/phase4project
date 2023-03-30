@@ -154,7 +154,8 @@ function Profile({user}) {
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
-                    setMessages([...messages, data])
+                    setMessages([...messages, data]);
+                    setNewMessage('');
                 })
             } else {
                 console.log('nope')
