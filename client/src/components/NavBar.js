@@ -1,5 +1,5 @@
 import Menu from 'react-burger-menu/lib/menus/slide'
-import { useHistory } from 'react-router-dom'
+import { useHistory, NavLink } from 'react-router-dom'
 
 function NavBar({ user, setUser }){
 
@@ -33,22 +33,22 @@ function NavBar({ user, setUser }){
                 /> 
             : null}
             <Menu right width={'15%'}>
-                <a id="home" className="menu-item" href="/">Home</a>
+                <NavLink id="home" className="menu-item" exact to="/">Home</NavLink>
                 {user ? 
                     <>
-                        <a id="logout" className="bm-item" href="/login" onClick={handleLogout}>Logout</a>
+                        <NavLink id="logout" className="bm-item" to="/login" onClick={handleLogout}>Logout</NavLink>
                         <br />
-                        <a id="my-profile" className="bm-item" href={`profile/${user.id}`}>My Profile</a>
+                        <NavLink id="my-profile" className="bm-item" to={`/profile/${user.id}`}>My Profile</NavLink>
                         <br />
-                        <a id="make-post" className="bm-item" href="/newpost">Make a Post</a>
+                        <NavLink id="make-post" className="bm-item" to="/newpost">Make a Post</NavLink>
                         {user.is_admin ? 
                             <>
                                 <br />
-                                <a id="edit-crimes" className="bm-item" href="/crimes" >Edit Crimes</a> 
+                                <NavLink id="edit-crimes" className="bm-item" to="/crimes" >Edit Crimes</NavLink> 
                             </>
                         : null}
                     </>
-                    : <a id="login" className="bm-item" href="/login">Login</a>
+                    : <NavLink id="login" className="bm-item" to="/login">Login</NavLink>
                     
                 }
                 

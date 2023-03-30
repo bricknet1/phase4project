@@ -42,6 +42,9 @@ ul {
   cursor: pointer;
 }
 
+.active {
+  color: var(--red) !important;
+}
 
 /* Home */
 .post-container {
