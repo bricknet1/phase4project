@@ -42,6 +42,7 @@ with app.app_context():
     UserCrime.query.delete()
     Post.query.delete()
     Friendship.query.delete()
+    Message.query.delete()
 
     # Create some crimes
     print('Creating crimes...')
