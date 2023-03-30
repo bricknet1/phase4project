@@ -23,12 +23,8 @@ function NewPost({user}) {
             })
             .then(res => {
                 if (res.ok) {
-                    res.json().then(data => {
-                        console.log(data)
-                        history.push('/')
-                    })
+                    res.json().then(history.push('/'))
                 } else {
-                    // console.log('nope')
                     res.json().then(error => console.log(error.message))
                 };
         })

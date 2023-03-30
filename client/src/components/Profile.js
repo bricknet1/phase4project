@@ -15,7 +15,7 @@ function Profile({user}) {
 
     const {id} = useParams();
 
-    const thisUser = user?user.id==id:false
+    const thisUser = user?user.id===parseInt(id):false
     
     const [profile, setProfile] = useState({
         "name":'',
@@ -48,7 +48,6 @@ function Profile({user}) {
         })
         .then(res => {
             if (res.ok) {
-                res.json().then(data => console.log(data));
                 isAFriend = true;
                 window.location.reload(true);
             } else console.log('error adding friend');
@@ -56,7 +55,6 @@ function Profile({user}) {
     }
     
     function handleClickRemoveFriend() {
-        console.log(id, user.id)
         fetch('/friendships', {
             method: 'DELETE',
             headers: {
@@ -159,7 +157,6 @@ function Profile({user}) {
                     setNewMessage('');
                 })
             } else {
-                console.log('nope')
                 res.json().then(error => console.log(error.message))
             };
         })
@@ -171,7 +168,7 @@ function Profile({user}) {
 
     return (
         <>
-            <img src={photo} className="profile-photo" />
+            <img src={photo} alt={name} className="profile-photo" />
             <h1>{name}</h1>
             <p>{bio}</p>
             <p>{email}</p>
@@ -198,7 +195,7 @@ function Profile({user}) {
             </div>:''}
             <div className="crimes">
                 <h3>Crimes:</h3>
-                {thisUser?<a href='/crimeslist'>Add More Crimes</a>:null}
+                {thisUser?<a href='/crimeslist'>Add/Remove My Crimes</a>:null}
                 <ul>
                     {crime_list.map((crime, index) => (
                         <li key={index}>{crime.name}

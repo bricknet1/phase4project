@@ -10,7 +10,7 @@ function Home() {
 
     const numPosts = posts.length;
     let maxIndex = numPosts - (numPosts % 5)
-    if (numPosts % 5 == 0) maxIndex = maxIndex - 5;
+    if (numPosts % 5 === 0) maxIndex = maxIndex - 5;
 
     const handleClickForward = () => {
         if (index < maxIndex) {
@@ -29,21 +29,17 @@ function Home() {
         history.push(`profile/${user_id}`)
     };
 
-    const handleClickLike = (e) => {
-        console.log()
-    };
-
     useEffect(() => {
         fetch('/posts')
-          .then(res => res.json())
-          .then((data) => setPosts(data.reverse()));
+        .then(res => res.json())
+        .then((data) => setPosts(data.reverse()));
     }, []);
 
     if (!posts) {
         return <h1>Loading</h1>
     } else {
         const postList = posts.slice(index, index+5).map((post, index) => {    
-            const { content, likes, user, user_id } = post;
+            const { content, user, user_id } = post;
             const { name, photo } = user;
             
             return (
@@ -51,9 +47,9 @@ function Home() {
                     <div className='div-post' user_id={user_id} onClick={handleClickPost}>
                         <div className='post-img-name-container'>
                             <img 
-                              src={photo} 
-                              className='img-post' 
-                              alt={name} 
+                                src={photo} 
+                                className='img-post' 
+                                alt={name} 
                             />
                             <span>{name}</span>
                         </div>

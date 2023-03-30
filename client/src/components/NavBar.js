@@ -9,7 +9,6 @@ function NavBar({ user, setUser }){
     const [menuOpen, setMenuOpen] = useState(false);
 
     const handleClickMenuItem = () => {
-        console.log('boing');
         setMenuOpen(false);
     };
 
