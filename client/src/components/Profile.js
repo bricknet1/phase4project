@@ -108,6 +108,7 @@ function Profile({user}) {
 
     useEffect(()=>{
         setIsLoaded(false)
+        setEditMode(false)
         fetch('/users/'+id)
         .then(res=>res.json())
         .then((data) => {
