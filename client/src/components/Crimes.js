@@ -80,7 +80,7 @@ function Crimes({user}){
                     <input type="text"  name="name" value={formik.values.name} onChange={formik.handleChange} />
                     <br></br>
                     <label >Description</label>
-                    <input type="text"  name="description" value={formik.values.description} onChange={formik.handleChange} />
+                    <textarea type="text"  name="description" value={formik.values.description} onChange={formik.handleChange} />
                     <br></br>
                     <input type='submit' value='Save' />
                 </form>
@@ -90,12 +90,9 @@ function Crimes({user}){
                     <ul>
                         {crimes.map((crime, index) => (
                             <li key={index} className='singlecrime'>{crime.name}
+                                <p>{crime.description}</p>
                                 <button onClick={editButton} name={crime.id}>Edit</button>
                                 <button onClick={deleteButton} name={crime.id}>Delete</button>
-                                <ul>
-                                    <li>{crime.description}</li>
-                                    <br></br>
-                                </ul>
                             </li>
                         ))}
                     </ul>
