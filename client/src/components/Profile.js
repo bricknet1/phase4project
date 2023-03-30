@@ -8,15 +8,14 @@ function Profile({user}) {
 
     const [editMode, setEditMode] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
-    // const [isAFriend, setIsAFriend] = useState(false);
-    // const [error, setError] = useState('');
-    
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+
     const history = useHistory();
 
     const {id} = useParams();
 
-    
-    const thisUser = user?user.id==id:false
+    const thisuser = user?user.id==id:false
     
     const [profile, setProfile] = useState({
         "name":'',
@@ -25,13 +24,12 @@ function Profile({user}) {
         "caught":'',
         "convicted":''
     });
-    
+
     let isAFriend = false;
     if (user) {
         const friendIds = user.friends.map(friend => friend.id);
         isAFriend = thisUser ? false : friendIds.includes(parseInt(id));
     }
-    
     
     function handleClickEdit(){
         setEditMode(current=>!current)
@@ -118,9 +116,55 @@ function Profile({user}) {
         })
     }, [id])
 
-    if (!isLoaded) return <h1>Loading...</h1>;
+    useEffect(() => {
+        if(user){
+        fetch('/messages/'+user.id)
+        .then(res => res.json())
+        .then((data) => data.forEach(message => {
+            if ((message.sender_id === parseInt(id)) || (message.receiver_id === parseInt(id))){setMessages(messages => [...messages, message])}
+        }))
+        }
+    }, [user]);
 
+    const messageRender = messages.map((message, index) => {
+        return(
+            <p key={index}>{(message.sender_id === user.id)?"Me: ":profile.name+": "}{message.content}</p>
+        )
+    })
+
+    function handleNewMessage(e){
+        setNewMessage(e.target.value)
+    }
+    
+    function handleSubmitNewMessage(e){
+        e.preventDefault();
+        const values = {
+            content: newMessage,
+            sender_id: user.id,
+            receiver_id: id
+        }
+        fetch('/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(data => {
+                    setMessages([...messages, data])
+                })
+            } else {
+                console.log('nope')
+                res.json().then(error => console.log(error.message))
+            };
+        })
+    }
+    
     const {name, bio, photo, email, is_admin, crime_list, friends} = profile
+  
+    if (!isLoaded) return <h1>Loading...</h1>;
 
     return (
         <>
@@ -163,6 +207,7 @@ function Profile({user}) {
                     ))}
                 </ul>
             </div>
+
             <div className="friends">
                 <h3>Friends:</h3>
                 <ul>
@@ -184,6 +229,16 @@ function Profile({user}) {
                         );
                     })}
                 </ul>
+            </div>    
+
+            <div className='messages'>
+                <h3>Messages with this criminal:</h3>
+                {messageRender}
+                <form onSubmit={handleSubmitNewMessage}>
+                    <label >Send this criminal a new message: </label>
+                    <input type="text"  name="content" value={newMessage} onChange={handleNewMessage} />
+                    <input type='submit' value='Send' />
+                </form>
             </div>
         </>
     );

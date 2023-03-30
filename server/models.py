@@ -43,6 +43,11 @@ class User(db.Model, SerializerMixin):
     posts = db.relationship('Post', backref='user')
 
     friendships = db.relationship('Friendship', foreign_keys='Friendship.friend_id', backref='user')
+
+    friend_ids = association_proxy('friendships', 'user_id')
+
+    messages = db.relationship('Message', foreign_keys='Message.sender_id', backref='sender')
+
     @property
     def friends(self):
         result = []
@@ -116,4 +121,12 @@ class Friendship(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     friend_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-# class Messages(db.Model, SerializerMixin):
+class Message(db.Model, SerializerMixin):
+    __tablename__ = 'messages'
+
+    serialize_rules = ('-sender',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    content = db.Column(db.String)

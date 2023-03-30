@@ -3,7 +3,7 @@ from faker import Faker
 import random
 
 from app import app
-from models import db, Crime, User, UserCrime, Post, Friendship
+from models import db, Crime, User, UserCrime, Post, Friendship, Message
 
 fake = Faker()
 
@@ -42,6 +42,7 @@ with app.app_context():
     UserCrime.query.delete()
     Post.query.delete()
     Friendship.query.delete()
+    Message.query.delete()
 
     # Create some crimes
     print('Creating crimes...')
@@ -255,12 +256,22 @@ with app.app_context():
         Friendship(user_id=11, friend_id=9),
     ]
 
+    # Create some messages
+    print('Creating messages...')
+    messages = [
+        Message(sender_id=1, receiver_id=2, content='Hey dude!'),
+        Message(sender_id=2, receiver_id=1, content='Hey!'),
+        Message(sender_id=2, receiver_id=1, content='Been a while!'),
+        Message(sender_id=1, receiver_id=2, content='Yeah, I have been avoiding you.')
+    ]
+
     print('Adding to database...')
     db.session.add_all(crimes)
     db.session.add_all(users)
     db.session.add_all(usercrimes)
     db.session.add_all(posts)
     db.session.add_all(friendships)
+    db.session.add_all(messages)
     db.session.commit()
 
     print('Donzoe')
