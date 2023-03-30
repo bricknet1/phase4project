@@ -130,7 +130,14 @@ function Profile({user}) {
 
     const messageRender = messages.map((message, index) => {
         return(
-            <p key={index}>{(message.sender_id === user.id)?"Me: ":profile.name+": "}{message.content}</p>
+            <div key={index}
+            className={
+                message.sender_id === user.id ? 'sent-message' : 'received-message'
+            }>
+                <p>
+                    {(message.sender_id === user.id) ? "" : profile.name+": "}{message.content}
+                </p>
+            </div>
         )
     })
 
@@ -170,56 +177,16 @@ function Profile({user}) {
     if (!isLoaded) return <h1>Loading...</h1>;
 
     return (
-        <>
-            <img src={photo} className="profile-photo" />
-            <h1>{name}</h1>
-            <p>{bio}</p>
-            <p>{email}</p>
-            <p>Admin: {is_admin?'Yes':'No'}</p>
-            {thisUser||!user ? null : 
-                isAFriend ? 
-                    <button onClick={handleClickRemoveFriend}>Remove Friend</button> 
-                : 
-                    <button onClick={handleClickAddFriend}>Add Friend</button>
-            }
-            {thisUser?<button onClick={handleClickEdit}>{editMode?'Close Editor Without Saving':'Edit Profile'}</button>:''}
-            {editMode?<div className='profile-edit'>
-                <form onSubmit={formik.handleSubmit} enableReinitialize>
-                    <label >Name</label>
-                    <input type="text"  name="name" value={formik.values.name} onChange={formik.handleChange} />
-                    <label >Email</label>
-                    <input type="text"  name="email" value={formik.values.email} onChange={formik.handleChange} />
-                    <label >Bio</label>
-                    <input type="text"  name="bio" value={formik.values.bio} onChange={formik.handleChange} />
-                    <label >Photo</label>
-                    <input type="text"  name="photo" value={formik.values.photo} onChange={formik.handleChange} />
-                    <input type='submit' value='Save' />
-                </form>
-            </div>:''}
-            <div className="crimes">
-                <h3>Crimes:</h3>
-                {thisUser?<a href='/crimeslist'>Add More Crimes</a>:null}
-                <ul>
-                    {crime_list.map((crime, index) => (
-                        <li key={index}>{crime.name}
-                            <ul>
-                                <li>Date committed: {crime.date}</li>
-                                <li>Caught: {crime.caught?"Yes":"No!"}</li>
-                                <li>Convicted: {crime.convicted?"Yes":"No!"}</li>
-                            </ul>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-            <div className="friends">
+        <div className='profile-container'>
+            {/* friends (left) */}
+            <div className="profile-friends-container">
                 <h3>Friends:</h3>
-                <ul>
+                <ul className='friend-list-container'>
                     {friends.map((friend, index) => {
                         return (
                             <li key={index}>
                                 <div 
-                                    className="friend-list-container"
+                                    className="friend-container"
                                     onClick={() => history.push('/profile/'+friend.id)}
                                 >
                                     <img 
@@ -233,18 +200,68 @@ function Profile({user}) {
                         );
                     })}
                 </ul>
-            </div>    
-
-            {user&&!thisUser?<div className='messages'>
-                <h3>Messages with this criminal:</h3>
-                {messageRender}
-                <form onSubmit={handleSubmitNewMessage}>
-                    <label >Send this criminal a new message: </label>
-                    <input type="text"  name="content" value={newMessage} onChange={handleNewMessage} />
-                    <input type='submit' value='Send' />
-                </form>
-            </div>:null}
-        </>
+            </div> 
+            {/* middle */}
+            <div className='profile-middle-container'>
+                {/* profile info */}
+                <div className='profile-info-container'>
+                    <img src={photo} className="profile-photo" />
+                    <h1>{name}</h1>
+                    <p>{bio}</p>
+                    {thisUser||!user ? null : 
+                        isAFriend ? 
+                            <button onClick={handleClickRemoveFriend}>Remove Friend</button> 
+                        : 
+                            <button onClick={handleClickAddFriend}>Add Friend</button>
+                    }
+                    {thisUser?<button onClick={handleClickEdit}>{editMode?'Close Editor Without Saving':'Edit Profile'}</button>:''}
+                    {editMode?<div className='profile-edit'>
+                        <form onSubmit={formik.handleSubmit} enableReinitialize>
+                            <label >Name</label>
+                            <input type="text"  name="name" value={formik.values.name} onChange={formik.handleChange} />
+                            <label >Email</label>
+                            <input type="text"  name="email" value={formik.values.email} onChange={formik.handleChange} />
+                            <label >Bio</label>
+                            <input type="text"  name="bio" value={formik.values.bio} onChange={formik.handleChange} />
+                            <label >Photo</label>
+                            <input type="text"  name="photo" value={formik.values.photo} onChange={formik.handleChange} />
+                            <input type='submit' value='Save' />
+                        </form>
+                    </div>:''}
+                </div>
+                {/* messages */}
+                <div className='profile-messages-container'>
+                    {user&&!thisUser?<div>
+                        <h3>Messages with this criminal:</h3>
+                        <div className='messages-container'>
+                            {messageRender}
+                        </div>
+                        <form onSubmit={handleSubmitNewMessage}>
+                            <label >Send this criminal a new message: </label>
+                            <input type="text"  name="content" value={newMessage} onChange={handleNewMessage} />
+                            <input type='submit' value='Send' />
+                        </form>
+                    </div>:null}
+                </div>
+            </div>
+            {/* crimes (right) */}
+            <div className="profile-crimes-container">
+                <h3>Crimes:</h3>
+                <ul>
+                    {crime_list.map((crime, index) => (
+                        <li key={index} className='crime-list-item'>
+                            <u><b>{crime.name}</b></u>
+                            <ul>
+                                <li>Date committed: {crime.date}</li>
+                                <li>Caught: {crime.caught?"Yes":"No!"}</li>
+                                <li>Convicted: {crime.convicted?"Yes":"No!"}</li>
+                            </ul>
+                        </li>
+                    ))}
+                </ul>
+                {thisUser?<a href='/crimeslist'>Add More Crimes</a>:null}
+            </div>
+        </div>
     );
 }
 
