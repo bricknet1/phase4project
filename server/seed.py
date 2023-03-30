@@ -171,7 +171,7 @@ with app.app_context():
     )
 
     crime11 = Crime(
-        name="Sale Blue Ducklings",
+        name="Sale of Blue Ducklings",
         description="Kentucky: it is illegal to dye a duckling blue and offer it for sale unless more than six are for sale at once.",
         lethal=False,
         misdemeanor=True,
@@ -210,7 +210,7 @@ with app.app_context():
         felony=False
     )
 
-    crimes = [crime1, crime2, crime3, crime4, crime5, crime6, crime7, crime9, crime10, crime11, crime12, crime13, crime14, crime15]
+    crimes = [crime1, crime2, crime3, crime4, crime5, crime6, crime7, crime8, crime9, crime10, crime11, crime12, crime13, crime14, crime15]
 
     # Create some users
     print('Creating users...')
@@ -242,8 +242,8 @@ with app.app_context():
     for i in range(40):
         caught = random.choice([True, False])
         usercrime = UserCrime(
-            user_id=random.randint(1, 11),
-            crime_id=random.randint(1, 7),
+            user_id=random.randint(1, 12),
+            crime_id=random.randint(1, 15),
             date=fake.date(),
             caught=caught,
             convicted=(False if caught == False else random.choice([True, False]))
@@ -255,7 +255,7 @@ with app.app_context():
     posts = []
     for i in range(24):
         post = Post(
-            user_id=random.randint(1, 11),
+            user_id=random.randint(1, 12),
             content=post_content[i],
             likes=random.randint(0, 69),
         )
@@ -274,6 +274,7 @@ with app.app_context():
         Friendship(user_id=1, friend_id=9),
         Friendship(user_id=1, friend_id=10),
         Friendship(user_id=1, friend_id=11),
+        Friendship(user_id=1, friend_id=12),
 
         Friendship(user_id=2, friend_id=1),
         Friendship(user_id=2, friend_id=3),
@@ -322,6 +323,8 @@ with app.app_context():
         Friendship(user_id=11, friend_id=5),
         Friendship(user_id=11, friend_id=7),
         Friendship(user_id=11, friend_id=9),
+
+        Friendship(user_id=12, friend_id=1)
     ]
 
     # Create some messages
@@ -334,8 +337,8 @@ with app.app_context():
     ]
     for i in range(15):
         message = Message(
-            sender_id=random.randint(3, 11),
-            receiver_id=random.randint(3, 11),
+            sender_id=random.randint(3, 12),
+            receiver_id=random.randint(3, 12),
             content=message_content[i]
         )
         posts.append(message)

@@ -6,4 +6,4 @@ This is a single-page application using React, Python, Flask, and SQLAlchemy to 
 
 ## Disclaimer
 
-This was created for entertainment purposes only. The creators of this app do not condone criminal activity in any way.
+This was created for entertainment purposes only. The creators of this app do not condone criminal activity in any way. Do not, under any circumstances, break any laws. 
