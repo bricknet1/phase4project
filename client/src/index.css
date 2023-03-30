@@ -91,16 +91,84 @@ ul {
 }
 
 /* Profile */
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.profile-inner-container {
+  flex-basis: 33%;
+}
+
+.profile-crimes-container {
+  text-align: center;
+  flex-basis: 33%;
+}
+
+.crime-list-item {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.profile-friends-container {
+  text-align: center;
+  flex-basis: 33%;
+}
+
+.profile-info-container {
+  text-align: center;
+}
+
+.profile-messages-container {
+  text-align: center;
+}
+
+.messages-container {
+  border: 1px solid var(--red);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.sent-message {
+  color: var(--red);
+  text-align: right;
+  /* margin-left: 200px; */
+  /* float: right; */
+}
+
+.sent-message p {
+
+}
+
+.received-message {
+  color: var(--dark-grey);
+  text-align: left;
+  /* margin-right: 200px; */
+  /* float: left; */
+}
+
 .profile-photo {
   height: 30vh; 
   width: 30vh;
   object-fit: cover;
-  border-radius: 50%;
   margin: 20px 0;
+  border: 3px solid var(--red);
 }
 
 .friend-list-container {
 
+}
+
+.friend-container {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.friend-container img {
+  margin-right: 15px;
 }
 
 .img-friend-list {
@@ -183,4 +251,9 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bm-overlay {
   background: var(--smoke-white);
   opacity: 0 !important;
+}
+
+/*  */
+.deletecrime {
+  cursor: pointer;
 }
