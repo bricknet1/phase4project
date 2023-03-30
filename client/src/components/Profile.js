@@ -8,6 +8,7 @@ function Profile({user}) {
 
     const [editMode, setEditMode] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
+    // const [isAFriend, setIsAFriend] = useState(false);
     // const [error, setError] = useState('');
     
     const history = useHistory();
@@ -50,7 +51,8 @@ function Profile({user}) {
           .then(res => {
             if (res.ok) {
                 res.json().then(data => console.log(data));
-                // window.location.reload(false);
+                isAFriend = true;
+                window.location.reload(true);
             } else console.log('error adding friend');
           })
     }
@@ -68,6 +70,7 @@ function Profile({user}) {
             })
         })
           .catch(err => console.log(err))
+        window.location.reload(true);
     }
 
     const formSchema = yup.object().shape({
