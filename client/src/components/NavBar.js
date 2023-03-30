@@ -23,7 +23,7 @@ function NavBar({ user, setUser }){
 
     return(
         <div className='navbar-container'>
-            <h1>Temporary placeholder name of app</h1>
+            <a className="logo" href='/'>Slammr</a>
             {user ? 
                 <img 
                     src={user.photo}      
