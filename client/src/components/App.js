@@ -8,6 +8,7 @@ import NavBar from './NavBar.js';
 import NewPost from './NewPost.js';
 import Crimes from './Crimes.js';
 import EditCrime from './EditCrime.js';
+import CrimesList from './CrimesList.js';
 
 function App() {
     const [user, setUser] = useState(null);
@@ -48,6 +49,9 @@ function App() {
                 </Route>
                 <Route path="/crimes/:id" exact>
                     <EditCrime user={user}/>
+                </Route>
+                <Route path="/crimeslist" exact>
+                    <CrimesList user={user}/>
                 </Route>
                 <Route path="/crimes" exact>
                     <Crimes user={user}/>

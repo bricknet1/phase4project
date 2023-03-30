@@ -53,7 +53,7 @@ function Login({ setUser }) {
                 <label >Email</label>
                 <input type="text"  name="email" value={formik.values.email} onChange={formik.handleChange} />
                 <label >Password</label>
-                <input type="text"  name="password" value={formik.values.password} onChange={formik.handleChange} />
+                <input type="password"  name="password" value={formik.values.password} onChange={formik.handleChange} />
                 <input type='submit' value={signup?'Create Account!':'Log In!'} />
             </form>
 
