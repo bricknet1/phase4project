@@ -34,32 +34,34 @@ function App() {
     return (
         <>
             <NavBar user={user} setUser={setUser}></NavBar>
-            <Switch>
-                <Route path="/" exact>
-                    <Home user={user}/>
-                </Route>
-                <Route path="/login" exact>
-                    <Login setUser={setUser}/>
-                </Route>
-                <Route path="/profile/:id" exact>
-                    <Profile user={user}/>
-                </Route>
-                <Route path="/newpost" exact>
-                    <NewPost user={user}/>
-                </Route>
-                <Route path="/crimes/:id" exact>
-                    <EditCrime user={user}/>
-                </Route>
-                <Route path="/crimeslist" exact>
-                    <CrimesList user={user}/>
-                </Route>
-                <Route path="/crimes" exact>
-                    <Crimes user={user}/>
-                </Route>
-                <Route path="*">
-                    <h3>404 Not Found</h3>
-                </Route>
-            </Switch>  
+            <div className='body'>
+                <Switch>
+                    <Route path="/" exact>
+                        <Home user={user}/>
+                    </Route>
+                    <Route path="/login" exact>
+                        <Login setUser={setUser}/>
+                    </Route>
+                    <Route path="/profile/:id" exact>
+                        <Profile user={user}/>
+                    </Route>
+                    <Route path="/newpost" exact>
+                        <NewPost user={user}/>
+                    </Route>
+                    <Route path="/crimes/:id" exact>
+                        <EditCrime user={user}/>
+                    </Route>
+                    <Route path="/crimeslist" exact>
+                        <CrimesList user={user}/>
+                    </Route>
+                    <Route path="/crimes" exact>
+                        <Crimes user={user}/>
+                    </Route>
+                    <Route path="*">
+                        <h3>404 Not Found</h3>
+                    </Route>
+                </Switch>  
+            </div>
         </>
     );
 }

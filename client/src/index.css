@@ -9,6 +9,8 @@
 body {
   background-color: var(--smoke-white);
   font-family: sans-serif;
+  /* background: url("https://npr.brightspotcdn.com/dims4/default/1866b8a/2147483647/strip/true/crop/6000x3000+0+0/resize/880x440!/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2Flegacy%2Fsites%2Fhealthnewsfl%2Ffiles%2F202005%2Fjailcell3_iStock_032320.jpg") no-repeat center center fixed ;
+  background-size: cover; */
 }
 
 ul {
@@ -19,12 +21,22 @@ ul {
 .logo {
   color: var(--red);
   text-decoration: none;
-  font-size: 5vw;
+  font-size: 50px;
+  margin-left: 10px;
+  background: rgb(28, 33, 83);
 }
 
 .navbar-container {
   display: flex;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  /* background: rgb(28, 33, 83); */
+  background: url("https://npr.brightspotcdn.com/dims4/default/1866b8a/2147483647/strip/true/crop/6000x3000+0+0/resize/880x440!/quality/90/?url=http%3A%2F%2Fnpr-brightspot.s3.amazonaws.com%2Flegacy%2Fsites%2Fhealthnewsfl%2Ffiles%2F202005%2Fjailcell3_iStock_032320.jpg") no-repeat center center fixed ;
+  background-size: cover;
 }
 
 .navbar-container h1 {
@@ -32,8 +44,8 @@ ul {
 }
 
 .profile-photo-nav {
-  height: 10vh; 
-  width: 10vh;
+  height: 60px; 
+  width: 60px;
   object-fit: cover;
   border-radius: 50%;
   margin-left: auto;
@@ -44,6 +56,12 @@ ul {
 
 .active {
   color: var(--red) !important;
+}
+
+/* Main container */
+.body {
+  margin-top: 125px;
+  /* background-color: rgba(255, 255, 255, 0.678); */
 }
 
 /* Home */

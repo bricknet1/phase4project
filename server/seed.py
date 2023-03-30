@@ -236,13 +236,23 @@ with app.app_context():
         user.password_hash = 'password'
         users.append(user)
 
+    topher = User(
+        name="Christopher Ludlow",
+        bio="I'm very well lit.",
+        photo="https://github.com/bricknet1/phase4project/blob/main/base-jumpers%20(2).jpg?raw=true",
+        email="tophdoggyrulz@askjeeves.com",
+        is_admin=True
+    )
+    topher.password_hash = 'password'
+    users.append(topher)
+
     # Create some user crimes
     print('Creating user crimes...')
     usercrimes = []
     for i in range(40):
         caught = random.choice([True, False])
         usercrime = UserCrime(
-            user_id=random.randint(1, 12),
+            user_id=random.randint(1, 13),
             crime_id=random.randint(1, 15),
             date=fake.date(),
             caught=caught,
@@ -255,7 +265,7 @@ with app.app_context():
     posts = []
     for i in range(24):
         post = Post(
-            user_id=random.randint(1, 12),
+            user_id=random.randint(1, 13),
             content=post_content[i],
             likes=random.randint(0, 69),
         )
@@ -275,6 +285,7 @@ with app.app_context():
         Friendship(user_id=1, friend_id=10),
         Friendship(user_id=1, friend_id=11),
         Friendship(user_id=1, friend_id=12),
+        Friendship(user_id=1, friend_id=13),
 
         Friendship(user_id=2, friend_id=1),
         Friendship(user_id=2, friend_id=3),
@@ -308,6 +319,7 @@ with app.app_context():
         Friendship(user_id=8, friend_id=1),
         Friendship(user_id=8, friend_id=5),
         Friendship(user_id=8, friend_id=7),
+        Friendship(user_id=8, friend_id=13),
 
         Friendship(user_id=9, friend_id=1),
         Friendship(user_id=9, friend_id=2),
@@ -324,7 +336,10 @@ with app.app_context():
         Friendship(user_id=11, friend_id=7),
         Friendship(user_id=11, friend_id=9),
 
-        Friendship(user_id=12, friend_id=1)
+        Friendship(user_id=12, friend_id=1),
+
+        Friendship(user_id=13, friend_id=1),
+        Friendship(user_id=13, friend_id=8)
     ]
 
     # Create some messages
@@ -337,8 +352,8 @@ with app.app_context():
     ]
     for i in range(15):
         message = Message(
-            sender_id=random.randint(3, 12),
-            receiver_id=random.randint(3, 12),
+            sender_id=random.randint(3, 13),
+            receiver_id=random.randint(3, 13),
             content=message_content[i]
         )
         posts.append(message)
