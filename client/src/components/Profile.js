@@ -213,7 +213,7 @@ function Profile({user}) {
                     }
                     {thisUser?<button onClick={handleClickEdit}>{editMode?'Close Editor Without Saving':'Edit Profile'}</button>:''}
                     {editMode?<div className='profile-edit'>
-                        <form onSubmit={formik.handleSubmit} enableReinitialize>
+                        <form onSubmit={formik.handleSubmit}>
                             <label >Name</label>
                             <input type="text"  name="name" value={formik.values.name} onChange={formik.handleChange} />
                             <label >Email</label>

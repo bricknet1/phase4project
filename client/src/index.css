@@ -177,6 +177,25 @@ ul {
   margin: 20px 0;
 }
 
+/* New Post */
+.new-post {
+  text-align: center;
+}
+
+.new-post-container {
+  height: 200px;
+}
+
+.new-post input {
+  margin: 40px auto;
+}
+
+.new-post textarea {
+  width: 25%;
+  height: 100%;
+  margin: 10px auto;
+}
+
 /* Burger */
 /* Position and sizing of burger button */
 .bm-burger-button {
