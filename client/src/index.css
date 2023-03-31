@@ -124,6 +124,11 @@ ul {
   flex-basis: 33%;
 }
 
+.profile-crimes-container a {
+  text-decoration: none;
+  color: var(--red);
+}
+
 .crime-list-item {
   text-align: center;
   margin-top: 50px;
@@ -152,19 +157,11 @@ ul {
 .sent-message {
   color: var(--red);
   text-align: right;
-  /* margin-left: 200px; */
-  /* float: right; */
-}
-
-.sent-message p {
-
 }
 
 .received-message {
   color: var(--dark-grey);
   text-align: left;
-  /* margin-right: 200px; */
-  /* float: left; */
 }
 
 .profile-photo {
@@ -175,8 +172,14 @@ ul {
   border: 3px solid var(--red);
 }
 
-.friend-list-container {
+.profile-edit {
+  border: 5px solid var(--red);
+  margin-top: 10px;
+}
 
+.profile-edit input {
+  display: block;
+  margin: 10px auto;
 }
 
 .friend-container {
@@ -195,6 +198,96 @@ ul {
   object-fit: cover;
   border-radius: 50%;
   margin: 20px 0;
+}
+
+/* New Post */
+.new-post {
+  text-align: center;
+  border: 5px solid var(--red);
+  width: 50%;
+  margin: 0 auto;
+}
+
+.new-post-container {
+  height: 200px;
+}
+
+.new-post input {
+  margin: 40px auto;
+}
+
+.new-post textarea {
+  width: 75%;
+  height: 100%;
+  margin: 10px auto;
+}
+
+/* Crimes List */
+.singlecrime {
+  border: 5px solid var(--red);
+  margin: 10px auto;
+  width: 50vw;
+  text-align: center;
+  padding: 10px;
+}
+
+.new-crime-form {
+  border: 5px solid var(--red);
+  width: 50vw;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
+}
+
+.new-crime-form input,
+.new-crime-form label {
+  margin: 10px auto;
+  display: block;
+}
+
+.new-crime-form textarea {
+  height: 20vh;
+  width: 80%;
+}
+
+.edit-crime-form {
+  border: 5px solid var(--red);
+  width: 50vw;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
+}
+
+.edit-crime-form input, 
+.edit-crime-form label {
+  margin: 10px auto;
+  display: block;
+}
+
+.edit-crime-form input[type=text] {
+  width: 50%;
+}
+
+.edit-crime-form textarea {
+  height: 20vh;
+  width: 80%;
+}
+
+/* Crimes in Profile */
+.add-personal-crime {
+  border: 5px solid var(--red);
+  width: 50%;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
+}
+
+.user-crimes {
+  border: 5px solid var(--red);
+  width: 50%;
+  margin: 10px auto;
+  padding: 10px;
+  text-align: center;
 }
 
 /* Burger */

@@ -57,13 +57,13 @@ function EditCrime({user}) {
     } else {
         return (
             <>
-                <div className='new-crime-form'>
+                <div className='edit-crime-form'>
                     <form onSubmit={formik.handleSubmit} >
                         <label >Name of Crime</label>
                         <input type="text"  name="name" value={formik.values.name} onChange={formik.handleChange} />
                         <br></br>
                         <label >Description</label>
-                        <input type="text"  name="description" value={formik.values.description} onChange={formik.handleChange} />
+                        <textarea type="text"  name="description" value={formik.values.description} onChange={formik.handleChange} />
                         <br></br>
                         <input type='submit' value='Save' />
                     </form>

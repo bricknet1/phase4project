@@ -1,11 +1,9 @@
 import { useFormik } from "formik";
 import { useHistory } from 'react-router-dom';
-// import { useState } from 'react';
 
 function NewPost({user}) {
 
     const history = useHistory();
-    // const [error, setError] = useState('');
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -36,9 +34,11 @@ function NewPost({user}) {
     } else {
     return(
         <div className='new-post'>
+            <h1>New Post</h1>
             <form onSubmit={formik.handleSubmit}>
-                <label >New Post:</label>
-                <input type="text"  name="content" value={formik.values.content} onChange={formik.handleChange} />
+                <div className="new-post-container">
+                    <textarea type="text"  name="content" value={formik.values.content} onChange={formik.handleChange} />
+                </div>
                 <input type='submit' value='Submit' />
             </form>
         </div>

@@ -76,8 +76,9 @@ function CrimesList({user}){
     if(user&&isLoaded){
         return(
             <>
-            <h1>My Crimes</h1>
+            {/* <h1>My Crimes</h1> */}
             <div className='add-personal-crime'>
+                <h2>Add a Crime</h2>
                 <form onSubmit={formik.handleSubmit} >
                     <label for='crime_id'>Crime: </label>
                     <select id='crime_id' name="crime_id" value={formik.values.crime_id} onChange={formik.handleChange} >
@@ -98,8 +99,8 @@ function CrimesList({user}){
                     <input type='submit' value='Save' />
                 </form>
             </div>
-            <div className="crimes">
-                    <h3>Crimes:</h3>
+            <div className="user-crimes">
+                    <h2>My Crimes</h2>
                     <ul>
                         {myCrimes.map((crime, index) => (
                             <li key={index}>{crime.name} - <span className='deletecrime' id={crime.id} onClick={handleDelete}>Delete This Crime</span>

@@ -310,6 +310,7 @@ with app.app_context():
         Friendship(user_id=6, friend_id=1),
         Friendship(user_id=6, friend_id=3),
         Friendship(user_id=6, friend_id=9),
+        Friendship(user_id=6, friend_id=12),
 
         Friendship(user_id=7, friend_id=1),
         Friendship(user_id=7, friend_id=2),
@@ -335,8 +336,12 @@ with app.app_context():
         Friendship(user_id=11, friend_id=5),
         Friendship(user_id=11, friend_id=7),
         Friendship(user_id=11, friend_id=9),
+        Friendship(user_id=11, friend_id=12),
 
         Friendship(user_id=12, friend_id=1),
+        Friendship(user_id=12, friend_id=11),
+        Friendship(user_id=12, friend_id=6)
+
 
         Friendship(user_id=13, friend_id=1),
         Friendship(user_id=13, friend_id=8)
