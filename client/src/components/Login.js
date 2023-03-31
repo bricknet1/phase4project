@@ -44,7 +44,7 @@ function Login({ setUser }) {
     })
 
     return (
-        <>
+        <div className='login-div'>
             <h1>{signup?'Create An Account':'Login'}</h1>
             <h2 style={{color:'red'}}> {formik.errors.email}</h2>
             {error&& <h2 style={{color:'red'}}> {error}</h2>}
@@ -57,7 +57,7 @@ function Login({ setUser }) {
                 <input type='submit' value={signup?'Create Account!':'Log In!'} />
             </form>
 
-        </>
+        </div>
     );
 }
 
