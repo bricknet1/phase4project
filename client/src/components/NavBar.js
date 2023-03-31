@@ -23,7 +23,6 @@ function NavBar({ user, setUser }){
         .then(res => {
             if(res.ok){
                 setUser(null)
-                history.push('/')
             }
         })
     };
@@ -87,8 +86,8 @@ function NavBar({ user, setUser }){
                             className="bm-item" 
                             to="/login" 
                             onClick={() => {
-                                handleLogout();
                                 handleClickMenuItem();
+                                handleLogout();
                             }}
                         >Logout</NavLink>
                         <br />
@@ -98,6 +97,7 @@ function NavBar({ user, setUser }){
                         id="login" 
                         className="bm-item" 
                         to="/login"
+                        onClick={handleClickMenuItem}
                     >Login</NavLink>
                     
                 }
