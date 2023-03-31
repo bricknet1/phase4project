@@ -70,9 +70,7 @@ function Home() {
                         {index === maxIndex ? '---' : '→'}
                     </button>
                 </div>
-
-                <ul>{postList}</ul>
-
+                {postList}
                 <div className='scroll-button-container'>
                     <button className='scroll-button' onClick={handleClickBack}>
                         {index === 0 ? '---' : '←'}

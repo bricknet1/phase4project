@@ -244,18 +244,15 @@ function Profile({user}) {
             {/* crimes (right) */}
             <div className="profile-crimes-container">
                 <h3>Crimes:</h3>
-                <ul>
                     {crime_list.map((crime, index) => (
-                        <li key={index} className='crime-list-item'>
+                        <ul key={index} className='crime-list-item'>
                             <u><b>{crime.name}</b></u>
-                            <ul>
-                                <li>Date committed: {crime.date}</li>
-                                <li>Caught: {crime.caught?"Yes":"No!"}</li>
-                                <li>Convicted: {crime.convicted?"Yes":"No!"}</li>
-                            </ul>
-                        </li>
+                            <li>Date committed: {crime.date}</li>
+                            <li>Caught: {crime.caught?"Yes":"No!"}</li>
+                            <li>Convicted: {crime.convicted?"Yes":"No!"}</li>
+                        </ul>
                     ))}
-                </ul>
+                <br></br>
                 {thisUser?<a href='/crimeslist'>Add More Crimes</a>:null}
             </div>
         </div>

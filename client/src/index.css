@@ -15,6 +15,7 @@ body {
 
 ul {
   list-style-type: none;
+  padding-left: 0;
 }
 
 /* Login */
@@ -207,6 +208,8 @@ ul {
   cursor: pointer;
   display: flex;
   align-items: center;
+  width: 50%;
+  margin-left: 30%;
 }
 
 .friend-container img {

@@ -73,7 +73,7 @@ function Crimes({user}){
     } else {
         return (
             <>
-                <button onClick={newCrimeButton}>Create a new crime</button>
+                <center><button onClick={newCrimeButton}>Create a new crime</button></center>
                 {newCrime?<div className='new-crime-form'>
                     <form onSubmit={formik.handleSubmit} >
                     <label >Name of Crime</label>
@@ -85,17 +85,15 @@ function Crimes({user}){
                     <input type='submit' value='Save' />
                 </form>
                 </div>:''}
-                <h2>Edit Available Crimes:</h2>
+                <center><h2>Edit Available Crimes:</h2></center>
                 <div className="crimes">
-                    <ul>
-                        {crimes.map((crime, index) => (
-                            <li key={index} className='singlecrime'>{crime.name}
-                                <p>{crime.description}</p>
-                                <button onClick={editButton} name={crime.id}>Edit</button>
-                                <button onClick={deleteButton} name={crime.id}>Delete</button>
-                            </li>
-                        ))}
-                    </ul>
+                    {crimes.map((crime, index) => (
+                        <ul key={index} className='singlecrime'>{crime.name}
+                            <p>{crime.description}</p>
+                            <button onClick={editButton} name={crime.id}>Edit</button>
+                            <button onClick={deleteButton} name={crime.id}>Delete</button>
+                        </ul>
+                    ))}
                 </div>
             </>
         )

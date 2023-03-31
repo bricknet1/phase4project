@@ -101,17 +101,14 @@ function CrimesList({user}){
             </div>
             <div className="user-crimes">
                     <h2>My Crimes</h2>
-                    <ul>
                         {myCrimes.map((crime, index) => (
-                            <li key={index}>{crime.name} - <span className='deletecrime' id={crime.id} onClick={handleDelete}>Delete This Crime</span>
-                                <ul>
+                            <ul key={index}>{crime.name} - <span className='deletecrime' id={crime.id} onClick={handleDelete}>Delete This Crime</span>
                                     <li>Date committed: {crime.date}</li>
                                     <li>Caught: {crime.caught?"Yes":"No!"}</li>
                                     <li>Convicted: {crime.convicted?"Yes":"No!"}</li>
-                                </ul>
-                            </li>
+                                <br></br>
+                            </ul>
                         ))}
-                    </ul>
                 </div>
             </>
         )
