@@ -340,7 +340,7 @@ with app.app_context():
 
         Friendship(user_id=12, friend_id=1),
         Friendship(user_id=12, friend_id=11),
-        Friendship(user_id=12, friend_id=6)
+        Friendship(user_id=12, friend_id=6),
 
 
         Friendship(user_id=13, friend_id=1),
