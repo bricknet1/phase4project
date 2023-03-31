@@ -21,6 +21,12 @@ class User(db.Model, SerializerMixin):
     user_crimes = db.relationship('UserCrime', backref='user')
     crimes = association_proxy('user_crimes', 'crime')
 
+    @validates('email')
+    def validate_email(self, key, email):
+        if "@" not in email:
+            raise ValueError("Must be a valid email address")
+        return email
+
     @property
     def crime_list(self):
         returnlist = []
